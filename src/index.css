@@ -173,6 +173,18 @@
 }
 
 /* ─────────────────────────────────────────────────────────
+   Header safe-area spacer
+   Desktop (in the phone shell): clears the Dynamic Island pill,
+   which ends at top:14 + height:34 = 48px.
+   Mobile (full screen, no island): sits just below the OS status
+   bar — at least 12px, more if a notch intrudes into the webview.
+   ───────────────────────────────────────────────────────── */
+.header-safe-top { height: var(--space-48); }
+@media (max-width: 639px) {
+  .header-safe-top { height: max(env(safe-area-inset-top, 0px), var(--space-12)); }
+}
+
+/* ─────────────────────────────────────────────────────────
    Typography utilities  —  mirrors Figma text styles
    Usage: <p className="type-body-m text-[var(--color-text-primary)]">
    ───────────────────────────────────────────────────────── */

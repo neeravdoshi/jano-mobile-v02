@@ -23,8 +23,8 @@ export function ChatThreadHeader({
       className={cn('flex w-full flex-col', className)}
       style={{ background: 'var(--neutral-card)', borderBottom: '1px solid var(--neutral-stroke)' }}
     >
-      {/* Safe-area spacer — clears the Dynamic Island */}
-      <div style={{ height: 'var(--space-48)' }} />
+      {/* Safe-area spacer — desktop clears the Dynamic Island; mobile uses the OS safe-area inset */}
+      <div className="header-safe-top" />
 
       {/* Title row */}
       <div

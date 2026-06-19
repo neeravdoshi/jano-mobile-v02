@@ -32,8 +32,8 @@ export function ScreenHeader({
         borderBottom: '1px solid var(--neutral-app-bg)',
       }}
     >
-      {/* Safe-area spacer — clears Dynamic Island (pill ends at ~48px) */}
-      <div style={{ height: 'var(--space-48)' }} />
+      {/* Safe-area spacer — desktop clears the Dynamic Island; mobile uses the OS safe-area inset */}
+      <div className="header-safe-top" />
 
       {/* Header row */}
       <div
