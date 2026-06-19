@@ -45,7 +45,7 @@ export function UnreadPatientChatsCard({ items, onViewAll, onSelect, className }
             className="type-overline-xs"
             style={{ color: 'var(--crimson-base)', textTransform: 'uppercase', letterSpacing: '0.8px' }}
           >
-            Unread Patient Chats
+            Unread Chats
           </span>
         </span>
 

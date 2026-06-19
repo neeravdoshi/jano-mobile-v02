@@ -46,6 +46,17 @@ export interface SummaryCardProps {
 
 const MUTED = 'var(--warm-grey)'
 
+// Dark, moody maroon surface — deep crimson mixed into charcoal, with a subtle warm
+// glow toward the bottom-right so the card has depth rather than a flat fill.
+const MAROON_CARD =
+  'linear-gradient(150deg, color-mix(in srgb, var(--crimson-80) 42%, var(--charcoal-base)) 0%, ' +
+  'color-mix(in srgb, var(--crimson-deep) 30%, var(--charcoal-base)) 100%)'
+// Tiles lift OFF the dark card as lighter glassy panels (translucent white) — this is the
+// contrast the card was missing: panels clearly read as raised, like the reference's inner cards.
+const MAROON_RAISED = 'color-mix(in srgb, var(--color-text-inverse) 10%, transparent)'
+// Urgent: a warm crimson glass instead of a neutral lift, so it pulls the eye.
+const MAROON_URGENT = 'color-mix(in srgb, var(--crimson-base) 24%, transparent)'
+
 export function SummaryCard({
   variant = 'breakdown',
   count,
@@ -61,7 +72,7 @@ export function SummaryCard({
   const [expanded, setExpanded] = useState(defaultExpanded)
 
   const cardStyle = {
-    background: 'var(--charcoal-base)',
+    background: MAROON_CARD,
     borderRadius: 'var(--radius-12)',
     padding: 'var(--space-12)',
   } as const
@@ -109,9 +120,7 @@ export function SummaryCard({
                     gap: 'var(--space-2)',
                     padding: 'var(--space-8) var(--space-12)',
                     borderRadius: 'var(--radius-10)',
-                    background: urgent
-                      ? 'color-mix(in srgb, var(--crimson-base) 18%, var(--charcoal-base))'
-                      : 'var(--charcoal-warm)',
+                    background: urgent ? MAROON_URGENT : MAROON_RAISED,
                   }}
                 >
                   {/* value carries the weight; icon sits inline as a quiet top-right accent */}
@@ -145,7 +154,7 @@ export function SummaryCard({
               gap: 'var(--space-8)',
               padding: 'var(--space-8) var(--space-12)',
               borderRadius: 'var(--radius-10)',
-              background: 'var(--charcoal-warm)',
+              background: MAROON_RAISED,
             }}
           >
             {footnote.icon && (

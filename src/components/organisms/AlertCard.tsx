@@ -37,8 +37,11 @@ export function AlertCard({
     <div
       className={cn('flex w-full flex-col', className)}
       style={{
-        background: 'var(--charcoal-base)',
-        border: '1px solid color-mix(in srgb, var(--crimson-30) 25%, transparent)',
+        // Urgent alerts lean into the brand red — a deep crimson gradient with a soft red edge.
+        background:
+          'linear-gradient(150deg, var(--crimson-deep) 0%, ' +
+          'color-mix(in srgb, var(--crimson-80) 60%, var(--charcoal-base)) 100%)',
+        border: '1px solid color-mix(in srgb, var(--crimson-30) 35%, transparent)',
         borderRadius: 'var(--radius-12)',
         padding: 'var(--space-16)',
         gap: 'var(--space-8)',
@@ -47,10 +50,10 @@ export function AlertCard({
       {/* Eyebrow + counter */}
       <div className="flex items-center justify-between" style={{ gap: 'var(--space-8)' }}>
         <div className="flex items-center" style={{ gap: 'var(--space-8)' }}>
-          <Icon size={14} strokeWidth={1.75} style={{ color: 'var(--crimson-base)', flexShrink: 0 }} />
+          <Icon size={14} strokeWidth={1.75} style={{ color: 'var(--color-text-inverse)', flexShrink: 0 }} />
           <span
             style={{
-              color: 'var(--crimson-base)',
+              color: 'var(--color-text-inverse)',
               fontFamily: 'var(--font-sans)',
               fontSize: 10,
               fontWeight: 600,
@@ -65,7 +68,7 @@ export function AlertCard({
         {showCounter && (
           <span
             style={{
-              color: 'var(--crimson-base)',
+              color: 'var(--color-text-inverse)',
               fontFamily: 'var(--font-sans)',
               fontSize: 10,
               fontWeight: 600,
@@ -96,10 +99,11 @@ export function AlertCard({
             <span
               className="type-body-text-m inline-flex items-center"
               style={{
-                background: 'var(--crimson-base)',
-                color: 'var(--color-text-inverse)',
+                background: 'var(--color-text-inverse)',
+                color: 'var(--crimson-deep)',
                 borderRadius: 'var(--radius-full)',
                 padding: 'var(--space-6) var(--space-12)',
+                fontWeight: 600,
                 whiteSpace: 'nowrap',
               }}
             >

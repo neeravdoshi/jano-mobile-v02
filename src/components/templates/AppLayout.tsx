@@ -44,8 +44,8 @@ export function AppLayout() {
   // Version toggle (desktop affordance) — patients list + open chat thread.
   const version = versionToggle(pathname)
 
-  // The login screen ('/') sits inside the shell but shows no bottom nav.
-  const showNav = pathname !== '/'
+  // The login screen ('/') and the focused Ask AI page show no bottom nav.
+  const showNav = pathname !== '/' && pathname !== '/ask'
   const nav = showNav ? (
     <BottomNavigation
       active={tabFromPath(pathname)}

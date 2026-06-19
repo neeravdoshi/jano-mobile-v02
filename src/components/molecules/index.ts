@@ -40,6 +40,12 @@ export type { NextCheckupRowProps } from './NextCheckupRow'
 export { DrawerOption } from './DrawerOption'
 export type { DrawerOptionProps } from './DrawerOption'
 
+export { WaveformPlayer } from './WaveformPlayer'
+export type { WaveformPlayerProps } from './WaveformPlayer'
+
+export { SearchAskSwitch } from './SearchAskSwitch'
+export type { SearchAskSwitchProps } from './SearchAskSwitch'
+
 export { RecordInset } from './RecordInset'
 export type { RecordInsetProps } from './RecordInset'
 
@@ -51,4 +57,19 @@ export type { QuickAccessChipProps } from './QuickAccessChip'
 
 export { ReadStatusToggle } from './ReadStatusToggle'
 export type { ReadStatusToggleProps } from './ReadStatusToggle'
+
+export { TrendChart } from './TrendChart'
+export type { TrendChartProps } from './TrendChart'
+
+export { DayStrip } from './DayStrip'
+export type { DayStripProps } from './DayStrip'
+
+export { SuggestionPill } from './SuggestionPill'
+export type { SuggestionPillProps } from './SuggestionPill'
+
+export { AskMessage } from './AskMessage'
+export type { AskMessageProps } from './AskMessage'
+
+export { AskAction } from './AskAction'
+export type { AskActionProps } from './AskAction'
 

@@ -66,7 +66,7 @@ export function AppointmentProgress({ label = 'Appointment Progress', steps, cla
                   <Check size={8} strokeWidth={3} style={{ color: 'var(--color-text-inverse)' }} />
                 </span>
                 {i < steps.length - 1 && (
-                  <div style={{ flex: '1 0 0', width: 1, minHeight: 'var(--space-8)', background: 'var(--crimson-80)' }} />
+                  <div style={{ flex: '1 0 0', width: 1, minHeight: 'var(--space-16)', background: 'var(--crimson-80)' }} />
                 )}
               </Fragment>
             ))}

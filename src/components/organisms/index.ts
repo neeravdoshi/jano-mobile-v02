@@ -33,3 +33,21 @@ export type { BottomDrawerProps } from './BottomDrawer'
 
 export { Timeline } from './Timeline'
 export type { TimelineProps, TimelineRenderEntry } from './Timeline'
+
+export { LabParameterCard } from './LabParameterCard'
+export type { LabParameterCardProps } from './LabParameterCard'
+
+export { LabResultsTable } from './LabResultsTable'
+export type { LabResultsTableProps } from './LabResultsTable'
+
+export { PrescriptionCard } from './PrescriptionCard'
+export type { PrescriptionCardProps } from './PrescriptionCard'
+
+export { NoteCard } from './NoteCard'
+export type { NoteCardProps } from './NoteCard'
+
+export { AskDock } from './AskDock'
+export type { AskDockProps } from './AskDock'
+
+export { AppointmentCard } from './AppointmentCard'
+export type { AppointmentCardProps } from './AppointmentCard'

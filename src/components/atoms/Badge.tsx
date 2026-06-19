@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-export type BadgeColour = 'yellow' | 'green' | 'grey' | 'blue' | 'red' | 'black'
+export type BadgeColour = 'yellow' | 'green' | 'grey' | 'blue' | 'red' | 'black' | 'crimson'
 
 export interface BadgeProps {
   label: string
@@ -15,6 +15,7 @@ const colourStyles: Record<BadgeColour, { bg: string; text: string }> = {
   blue:   { bg: 'var(--badge-blue-bg)',   text: 'var(--badge-blue-text)'   },
   red:    { bg: 'var(--badge-red-bg)',    text: 'var(--badge-red-text)'    },
   black:  { bg: 'var(--badge-black-bg)',  text: 'var(--badge-black-text)'  },
+  crimson:{ bg: 'var(--badge-crimson-bg)', text: 'var(--badge-crimson-text)' },
 }
 
 export function Badge({ label, colour = 'grey', className }: BadgeProps) {

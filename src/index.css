@@ -50,6 +50,8 @@
     --badge-red-text:    var(--crimson-80);
     --badge-black-bg:    var(--charcoal-base);
     --badge-black-text:  #FFFFFF;
+    --badge-crimson-bg:  var(--crimson-deep);  /* solid urgent red — critical / out-of-range status */
+    --badge-crimson-text:#FFFFFF;
 
     /* ── Semantic aliases (used in components) ── */
     --color-brand:          var(--crimson-base);
@@ -96,6 +98,7 @@
     --text-lh-tight:   1.2;
     --text-lh-display: 1.1;
     --text-lh-snug:    20px;
+    --text-lh-relaxed: 1.5;   /* generous reading leading — multi-line AI / body copy */
 
     /* ── Spacing scale (Figma: Size tokens) ─────────────────
        ALL padding, margin, gap, width, height, inset values

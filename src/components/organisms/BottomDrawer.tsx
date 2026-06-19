@@ -1,4 +1,5 @@
 import { X } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 export interface BottomDrawerProps {
@@ -15,33 +16,47 @@ export interface BottomDrawerProps {
  * A dimmed scrim + a warm-white sheet that docks to the bottom of its nearest
  * positioned ancestor (e.g. the phone shell / page area). Tapping the scrim or
  * the close button calls onClose. Compose DrawerOption rows (or anything) as children.
+ *
+ * Motion: AnimatePresence drives both entry and exit — the scrim fades and the
+ * sheet slides up from the bottom on open, reversing on close (ease-out, no bounce).
+ * `useReducedMotion` collapses this to a plain fade with no translate.
  */
 export function BottomDrawer({ open, onClose, title, children, className }: BottomDrawerProps) {
-  if (!open) return null
+  const reduce = useReducedMotion()
 
   return (
-    <div className="absolute inset-0 flex flex-col justify-end" style={{ zIndex: 50 }}>
-      {/* Scrim */}
-      <button
-        type="button"
-        aria-label="Close"
-        onClick={onClose}
-        className="absolute inset-0"
-        style={{ background: 'var(--color-scrim)', border: 'none', cursor: 'pointer' }}
-      />
+    <AnimatePresence>
+      {open && (
+        <motion.div key="drawer" className="absolute inset-0 flex flex-col justify-end" style={{ zIndex: 50 }}>
+          {/* Scrim */}
+          <motion.button
+            type="button"
+            aria-label="Close"
+            onClick={onClose}
+            className="absolute inset-0"
+            style={{ background: 'var(--color-scrim)', border: 'none', cursor: 'pointer' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+          />
 
-      {/* Sheet */}
-      <div
-        className={cn('relative flex w-full flex-col items-center', className)}
-        style={{
-          background: 'var(--neutral-app-bg)',
-          borderTopLeftRadius: 'var(--radius-12)',
-          borderTopRightRadius: 'var(--radius-12)',
-          padding: 'var(--space-12)',
-          gap: 'var(--space-12)',
-          boxShadow: 'var(--shadow-soft-xl)',
-        }}
-      >
+          {/* Sheet */}
+          <motion.div
+            className={cn('relative flex w-full flex-col items-center', className)}
+            style={{
+              background: 'var(--neutral-app-bg)',
+              borderTopLeftRadius: 'var(--radius-12)',
+              borderTopRightRadius: 'var(--radius-12)',
+              padding: 'var(--space-12)',
+              gap: 'var(--space-12)',
+              boxShadow: 'var(--shadow-soft-xl)',
+            }}
+            initial={{ opacity: reduce ? 0 : 1, y: reduce ? 0 : '100%' }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: reduce ? 0 : 1, y: reduce ? 0 : '100%' }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          >
         {/* Drag handle */}
         <span
           style={{
@@ -74,7 +89,9 @@ export function BottomDrawer({ open, onClose, title, children, className }: Bott
         <div className="flex w-full flex-col" style={{ gap: 'var(--space-8)' }}>
           {children}
         </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }

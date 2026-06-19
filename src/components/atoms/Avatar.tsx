@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
+// Kept for back-compat with existing call sites; no longer drives the colour.
 export type AvatarColour = 'grey' | 'red' | 'green' | 'blue' | 'yellow'
 
 export interface AvatarProps {
   initials: string
+  /** @deprecated Initials avatars now use a single uniform brand tint. */
   colour?: AvatarColour
   /** Diameter in px. Initials scale relative to this. */
   size?: number
@@ -13,19 +15,9 @@ export interface AvatarProps {
   className?: string
 }
 
-// Shares the Badge colour tokens — the avatar is a circular tinted chip.
-const colourStyles: Record<AvatarColour, { bg: string; text: string }> = {
-  grey:   { bg: 'var(--badge-grey-bg)',   text: 'var(--badge-grey-text)'   },
-  red:    { bg: 'var(--badge-red-bg)',    text: 'var(--badge-red-text)'    },
-  green:  { bg: 'var(--badge-green-bg)',  text: 'var(--badge-green-text)'  },
-  blue:   { bg: 'var(--badge-blue-bg)',   text: 'var(--badge-blue-text)'   },
-  yellow: { bg: 'var(--badge-yellow-bg)', text: 'var(--badge-yellow-text)' },
-}
-
-export function Avatar({ initials, colour = 'grey', size = 40, imageUrl, className }: AvatarProps) {
+export function Avatar({ initials, size = 40, imageUrl, className }: AvatarProps) {
   const [imgError, setImgError] = useState(false)
   const showImage = imageUrl && !imgError
-  const { bg, text } = colourStyles[colour]
 
   if (showImage) {
     return (
@@ -49,8 +41,9 @@ export function Avatar({ initials, colour = 'grey', size = 40, imageUrl, classNa
       style={{
         width: size,
         height: size,
-        background: bg,
-        color: text,
+        // Uniform brand tint for every initials avatar (no per-person pastels).
+        background: 'var(--crimson-10)',
+        color: 'var(--crimson-deep)',
         borderRadius: 'var(--radius-full)',
         fontSize: Math.max(10, Math.round(size * 0.34)),
         fontWeight: 500,

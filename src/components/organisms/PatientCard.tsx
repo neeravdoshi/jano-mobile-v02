@@ -11,6 +11,8 @@ export interface PatientCardProps {
   ward?: string
   bed?: string
   mrn: string
+  /** Overrides the ward · bed · MRN meta line (e.g. a clinical one-liner in an Ask AI answer). */
+  meta?: string
   variant?: PatientCardVariant
   onClick?: () => void
   className?: string
@@ -28,13 +30,14 @@ export function PatientCard({
   ward,
   bed,
   mrn,
+  meta: metaOverride,
   variant = 'default',
   onClick,
   className,
 }: PatientCardProps) {
   const highlighted = variant === 'highlighted'
 
-  const meta = [ward, bed, mrn && `MRN ${mrn}`].filter(Boolean).join(' · ')
+  const meta = metaOverride ?? [ward, bed, mrn && `MRN ${mrn}`].filter(Boolean).join(' · ')
 
   return (
     <button

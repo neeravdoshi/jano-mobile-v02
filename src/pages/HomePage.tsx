@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Share2, Stethoscope, BedDouble } from 'lucide-react'
-import { ScreenHeader, SummaryCard, UnreadPatientChatsCard } from '@/components/organisms'
-import { SearchBar, StatCardGroup, type StatItem } from '@/components/molecules'
+import { ScreenHeader, SummaryCard, UnreadPatientChatsCard, AskDock } from '@/components/organisms'
+import { StatCardGroup, type StatItem } from '@/components/molecules'
 import { currentDoctor, chatThreads } from '@/lib/mockData'
 
 /**
@@ -12,7 +12,6 @@ import { currentDoctor, chatThreads } from '@/lib/mockData'
  */
 export function HomePage() {
   const navigate = useNavigate()
-  const [query, setQuery] = useState('')
 
   // Lucide stand-ins for the Figma custom glyph set (Referrals / OPD / Inpatient).
   const stats: StatItem[] = [
@@ -27,12 +26,12 @@ export function HomePage() {
   )
 
   return (
-    <div className="flex h-full flex-col" style={{ background: 'var(--neutral-app-bg)' }}>
+    <div className="relative flex h-full flex-col" style={{ background: 'var(--neutral-app-bg)' }}>
       <ScreenHeader variant="doctor" title={currentDoctor.name} subtitle={currentDoctor.hospital} />
 
       <div
         className="flex flex-1 flex-col overflow-y-auto no-scrollbar"
-        style={{ padding: 'var(--space-12)', gap: 'var(--space-12)' }}
+        style={{ padding: 'var(--space-12) var(--space-12) var(--space-80)', gap: 'var(--space-12)' }}
       >
         <SummaryCard
           count={18}
@@ -47,12 +46,6 @@ export function HomePage() {
         />
 
         <StatCardGroup items={stats} />
-
-        <SearchBar
-          placeholder="Search by Name, MRN or Phone"
-          value={query}
-          onChange={setQuery}
-        />
 
         <div className="flex flex-col" style={{ gap: 'var(--space-8)' }}>
           <h2 className="type-title-xl" style={{ color: 'var(--color-text-primary)' }}>
@@ -74,6 +67,8 @@ export function HomePage() {
           />
         </div>
       </div>
+
+      <AskDock className="absolute inset-x-0 bottom-0" onActivate={() => navigate('/ask?from=home')} />
     </div>
   )
 }

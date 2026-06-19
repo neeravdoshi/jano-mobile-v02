@@ -1,11 +1,12 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import markSrc from '@/assets/jano-mark.svg'
 import { colorGroups, componentRegistry } from '@/lib/componentRegistry'
 import type { ComponentDoc } from '@/lib/componentRegistry'
-import { House, MessageSquare, SquarePen, Share2, Stethoscope, BedDouble, UserPlus, RotateCcw, TriangleAlert, Activity, Clock } from 'lucide-react'
+import { House, MessageSquare, SquarePen, Share2, Stethoscope, BedDouble, UserPlus, RotateCcw, TriangleAlert, Activity, Clock, Search, X } from 'lucide-react'
 import { Button } from '@/components/atoms/Button'
 import { Input } from '@/components/atoms/Input'
+import { Textarea } from '@/components/atoms/Textarea'
 import { Badge } from '@/components/atoms/Badge'
 import { Avatar } from '@/components/atoms/Avatar'
 import { StatCard } from '@/components/atoms/StatCard'
@@ -35,7 +36,26 @@ import { AppointmentProgress } from '@/components/molecules/AppointmentProgress'
 import { NextCheckupRow } from '@/components/molecules/NextCheckupRow'
 import { DrawerOption } from '@/components/molecules/DrawerOption'
 import { BottomDrawer } from '@/components/organisms/BottomDrawer'
-import { Pill, FileText, LineChart, ClipboardList } from 'lucide-react'
+import { RecordInset } from '@/components/molecules/RecordInset'
+import { TimelineEntryHeader } from '@/components/molecules/TimelineEntryHeader'
+import { QuickAccessChip } from '@/components/molecules/QuickAccessChip'
+import { ReadStatusToggle } from '@/components/molecules/ReadStatusToggle'
+import { Timeline } from '@/components/organisms/Timeline'
+import { TrendChart } from '@/components/molecules/TrendChart'
+import { LabParameterCard } from '@/components/organisms/LabParameterCard'
+import { LabResultsTable } from '@/components/organisms/LabResultsTable'
+import { PrescriptionCard } from '@/components/organisms/PrescriptionCard'
+import { WaveformPlayer } from '@/components/molecules/WaveformPlayer'
+import { SearchAskSwitch } from '@/components/molecules/SearchAskSwitch'
+import { NoteCard } from '@/components/organisms/NoteCard'
+import { AskDock } from '@/components/organisms/AskDock'
+import { DayStrip } from '@/components/molecules/DayStrip'
+import { SuggestionPill } from '@/components/molecules/SuggestionPill'
+import { AskMessage } from '@/components/molecules/AskMessage'
+import { AskAction } from '@/components/molecules/AskAction'
+import { AppointmentCard } from '@/components/organisms/AppointmentCard'
+import { pathologyParameters, trendDates, scheduleDays } from '@/lib/mockData'
+import { Pill, FileText, LineChart, ClipboardList, FlaskConical, Sparkles, User, NotebookPen, Calendar } from 'lucide-react'
 
 // ── Nav structure ────────────────────────────────────────────────────────
 const NAV = [
@@ -94,6 +114,30 @@ const ALL_SECTION_IDS = [
   'elevation-soft', 'elevation-hard',
   'icons-library',
   'atoms', 'molecules', 'organisms',
+]
+
+// ── Sidebar search index ──────────────────────────────────────────────────
+type SearchItem = {
+  id: string
+  label: string
+  sublabel: string
+  type: 'nav' | 'component'
+}
+
+const SEARCH_INDEX: SearchItem[] = [
+  ...NAV.flatMap(item =>
+    'children' in item && item.children
+      ? item.children.map(child => ({ id: child.id, label: child.label, sublabel: item.label, type: 'nav' as const }))
+      : [{ id: item.id, label: item.label, sublabel: '', type: 'nav' as const }]
+  ),
+  ...componentRegistry.flatMap(section =>
+    section.components.map(comp => ({
+      id: `comp-${comp.name}`,
+      label: comp.name,
+      sublabel: section.label.replace(/s$/, ''),
+      type: 'component' as const,
+    }))
+  ),
 ]
 
 const statusPill: Record<string, { bg: string; color: string; label: string }> = {
@@ -186,6 +230,15 @@ function FabPreview() {
   )
 }
 
+function DayStripPreview() {
+  const [key, setKey] = useState('4')
+  return (
+    <div style={{ maxWidth: 360 }}>
+      <DayStrip days={scheduleDays} activeKey={key} onChange={setKey} />
+    </div>
+  )
+}
+
 // ── Live preview nodes per built component ───────────────────────────────
 const componentPreviews: Record<string, React.ReactNode> = {
   Button: (
@@ -211,6 +264,12 @@ const componentPreviews: Record<string, React.ReactNode> = {
         <p style={{ fontSize: 11, fontWeight: 600, color: 'var(--charcoal-oslo)', marginBottom: 6 }}>Error state</p>
         <Input placeholder="invalid-email" hasError defaultValue="not-an-email" />
       </div>
+    </div>
+  ),
+
+  Textarea: (
+    <div style={{ maxWidth: 360 }}>
+      <Textarea rows={3} placeholder="Chief complaints & HPI…" />
     </div>
   ),
 
@@ -244,7 +303,8 @@ const componentPreviews: Record<string, React.ReactNode> = {
       <Badge label="Stable" colour="green" />
       <Badge label="Caution" colour="yellow" />
       <Badge label="OPD" colour="blue" />
-      <Badge label="Critical" colour="red" />
+      <Badge label="Prescription" colour="red" />
+      <Badge label="High" colour="crimson" />
       <Badge label="Pending" colour="grey" />
       <Badge label="IPD" colour="black" />
     </div>
@@ -252,12 +312,13 @@ const componentPreviews: Record<string, React.ReactNode> = {
 
   Avatar: (
     <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-      <Avatar initials="GS" colour="grey" size={30} />
-      <Avatar initials="RS" colour="red" size={30} />
-      <Avatar initials="VS" colour="green" size={30} />
-      <Avatar initials="AM" colour="blue" size={30} />
-      <Avatar initials="PN" colour="yellow" size={30} />
-      <Avatar initials="DR" colour="grey" size={56} />
+      {/* Initials — one uniform brand tint */}
+      <Avatar initials="GS" size={30} />
+      <Avatar initials="RS" size={30} />
+      <Avatar initials="VS" size={30} />
+      <Avatar initials="DR" size={56} />
+      {/* Photo, with initials fallback on error */}
+      <Avatar initials="AM" imageUrl="https://images.unsplash.com/photo-1581382575275-97901c2635b7?w=160&h=160&fit=crop&crop=faces&q=80" size={56} />
     </div>
   ),
 
@@ -295,9 +356,17 @@ const componentPreviews: Record<string, React.ReactNode> = {
   FilterTabs: <FilterTabsPreview />,
 
   SearchBar: (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 420 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 420 }}>
       <SearchBar placeholder="Search" />
       <SearchBar showFilter placeholder="Search by Name, MRN or Phone" />
+      <SearchBar variant="ask" placeholder="Ask me anything" />
+      <SearchBar variant="ask" showFilter placeholder="Ask me anything" />
+    </div>
+  ),
+
+  SearchAskSwitch: (
+    <div style={{ maxWidth: 420 }}>
+      <SearchAskSwitch />
     </div>
   ),
 
@@ -328,6 +397,37 @@ const componentPreviews: Record<string, React.ReactNode> = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 420 }}>
       <PatientCard name="Arjun Patel" encounterType="IPD" ward="Nephrology Ward A" bed="Bed 12" mrn="UGI56212" />
       <PatientCard name="Meera Reddy" encounterType="OPD" ward="Nephrology Ward A" bed="Bed 4" mrn="UGI56240" variant="highlighted" />
+    </div>
+  ),
+
+  PrescriptionCard: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 420, background: 'var(--neutral-app-bg)', padding: 12, borderRadius: 12 }}>
+      <PrescriptionCard title="Nephrology follow-up Rx" createdAt="12 May 2026" status="draft" summary="Dry-weight review, appetite decline, and potassium follow-up after the last dialysis week." department="Nephrology" doctor="Dr. Mehta" />
+      <PrescriptionCard title="Anemia management Rx" createdAt="28 Apr 2026" status="signed" summary="Iron and erythropoietin adjustment after the latest haemoglobin and ferritin trend." department="Nephrology" doctor="Dr. Girish Sharma" />
+    </div>
+  ),
+
+  NoteCard: (
+    <div style={{ display: 'flex', gap: 8, maxWidth: 380, background: 'var(--neutral-app-bg)', padding: 12, borderRadius: 12 }}>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <NoteCard type="progress" title="Physio Report" body="Patient reports improved mobility and reduced pain in the left knee after starting the new physical therapy regimen." department="Physiotherapy" />
+      </div>
+      <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <NoteCard type="initial" title="Nephrology Assessment" body="Baseline assessment for CKD stage 5 with dialysis tolerance review." department="Nephrology" />
+        <NoteCard type="discharge" title="Discharge Note" body="Cleared for home exercises and a 2-week review." department="Physiotherapy" />
+      </div>
+    </div>
+  ),
+
+  WaveformPlayer: (
+    <div style={{ maxWidth: 360 }}>
+      <WaveformPlayer duration="1:24" />
+    </div>
+  ),
+
+  AskDock: (
+    <div style={{ maxWidth: 390, borderRadius: 16, overflow: 'hidden', border: '1px solid var(--neutral-stroke)', background: 'var(--neutral-app-bg)' }}>
+      <AskDock placeholder="Ask me anything" onActivate={() => {}} />
     </div>
   ),
 
@@ -622,6 +722,39 @@ const componentPreviews: Record<string, React.ReactNode> = {
     </div>
   ),
 
+  RecordInset: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 320 }}>
+      <RecordInset title="Outside lab bundle" meta="CBC, KFT, urine protein" onAction={() => {}} />
+      <RecordInset title="Follow-up lab order" meta="Iron profile · PTH · Viral markers" />
+      <div style={{ background: 'var(--charcoal-base)', borderRadius: 12, padding: 12 }}>
+        <RecordInset theme="dark" title="Outside lab bundle" meta="CBC, KFT, urine protein" onAction={() => {}} />
+      </div>
+    </div>
+  ),
+
+  TimelineEntryHeader: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 320 }}>
+      <TimelineEntryHeader date="20 Aug 2025" badgeLabel="Medication" badgeColour="yellow" />
+      <TimelineEntryHeader date="05 Jul 2025" badgeLabel="Lab" badgeColour="blue" />
+      <TimelineEntryHeader date="28 Jun 2025" badgeLabel="Report" badgeColour="green" />
+    </div>
+  ),
+
+  QuickAccessChip: (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, maxWidth: 360, background: 'var(--neutral-app-bg)', padding: 12, borderRadius: 12 }}>
+      <QuickAccessChip icon={ClipboardList} label="Prescription" />
+      <QuickAccessChip icon={Pill} label="Medications" />
+      <QuickAccessChip icon={FileText} label="Reports" />
+      <QuickAccessChip icon={Activity} label="Dialysis" />
+    </div>
+  ),
+
+  ReadStatusToggle: (
+    <div style={{ maxWidth: 360, background: 'var(--neutral-app-bg)', padding: 12, borderRadius: 12 }}>
+      <ReadStatusToggle />
+    </div>
+  ),
+
   DrawerOption: (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 360, background: 'var(--neutral-app-bg)', padding: 12, borderRadius: 12 }}>
       <DrawerOption icon={FileText} title="Add Notes" subtitle="Capture a progress note" />
@@ -631,6 +764,113 @@ const componentPreviews: Record<string, React.ReactNode> = {
   ),
 
   BottomDrawer: <BottomDrawerPreview />,
+
+  Timeline: (
+    <div style={{ maxWidth: 340, background: 'var(--neutral-card)', padding: 16, borderRadius: 12 }}>
+      <Timeline
+        entries={[
+          {
+            id: 'demo-1',
+            date: '20 Aug 2025',
+            badgeLabel: 'Medication',
+            badgeColour: 'yellow',
+            active: true,
+            content: (
+              <EventCard
+                icon={Pill}
+                title="CKD medications started"
+                meta="Initial renal regimen · Dr. Mehta · Nephrology"
+                description="Torsemide and sodium bicarbonate started for volume control."
+              >
+                <MedicationInset status="New start" name="Torsemide + sodium bicarbonate" detail="20 mg / 650 mg · Morning / Twice daily · Oral" />
+              </EventCard>
+            ),
+          },
+          {
+            id: 'demo-2',
+            date: '28 Jun 2025',
+            badgeLabel: 'Report',
+            badgeColour: 'green',
+            content: (
+              <EventCard
+                icon={FlaskConical}
+                title="Baseline reports uploaded"
+                meta="Creatinine 5.8 · eGFR 11 · Hb 8.9"
+                description="Initial outside reports were added and marked for urgent nephrology review."
+              >
+                <RecordInset title="Outside lab bundle" meta="CBC, KFT, urine protein" onAction={() => {}} />
+              </EventCard>
+            ),
+          },
+        ]}
+      />
+    </div>
+  ),
+
+  TrendChart: (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+      {['creatinine', 'ferritin'].map(pid => {
+        const p = pathologyParameters.find(x => x.id === pid)!
+        return (
+          <div key={pid} style={{ flex: '1 1 260px', maxWidth: 320, background: 'var(--neutral-card)', border: '1px solid var(--neutral-stroke)', borderRadius: 12, padding: 12 }}>
+            <p style={{ fontSize: 11, fontWeight: 600, color: 'var(--charcoal-oslo)', marginBottom: 8 }}>
+              {p.name} — {pid === 'creatinine' ? 'out of range' : 'within range'}
+            </p>
+            <TrendChart dataPoints={p.dataPoints} referenceRange={p.referenceRange} />
+          </div>
+        )
+      })}
+    </div>
+  ),
+
+  LabParameterCard: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 360 }}>
+      <LabParameterCard parameter={pathologyParameters.find(p => p.id === 'potassium')!} />
+      <LabParameterCard parameter={pathologyParameters.find(p => p.id === 'ferritin')!} />
+    </div>
+  ),
+
+  LabResultsTable: (
+    <div style={{ maxWidth: 420 }}>
+      <LabResultsTable parameters={pathologyParameters.slice(0, 5)} dates={trendDates} />
+    </div>
+  ),
+
+  DayStrip: <DayStripPreview />,
+
+  SuggestionPill: (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, maxWidth: 360, background: 'var(--neutral-app-bg)', padding: 16, borderRadius: 12 }}>
+      <SuggestionPill label="How does my day look?" icon={Sparkles} />
+      <SuggestionPill label="Who needs me first?" icon={Sparkles} />
+      <SuggestionPill label="Summarise the out-of-range values" />
+    </div>
+  ),
+
+  AskMessage: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 360, background: 'var(--neutral-app-bg)', padding: 16, borderRadius: 12 }}>
+      <AskMessage author="user" text="How does my day look?" />
+      <AskMessage author="assistant" text="You have **24 patients across 2 hospitals** today: 5 new, 14 follow-ups and **3 urgent**, ~2 procedures~. Want me to line up the urgent cases?">
+        <AskAction label="Open today’s schedule" icon={Calendar} />
+      </AskMessage>
+      <AskMessage author="assistant" loading />
+    </div>
+  ),
+
+  AskAction: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 320, background: 'var(--neutral-app-bg)', padding: 16, borderRadius: 12 }}>
+      <AskAction label="Open Arjun’s profile" icon={User} />
+      <AskAction label="View Arjun’s reports" icon={FlaskConical} />
+      <AskAction label="Add a note" icon={NotebookPen} />
+    </div>
+  ),
+
+  AppointmentCard: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 360 }}>
+      <AppointmentCard appointment={scheduleDays[2].appointments[1]} active onClick={() => {}} />
+      <AppointmentCard appointment={scheduleDays[2].appointments[2]} onClick={() => {}} />
+      <AppointmentCard appointment={scheduleDays[2].appointments[0]} onClick={() => {}} />
+    </div>
+  ),
 }
 
 // ── Component ────────────────────────────────────────────────────────────
@@ -702,8 +942,10 @@ export function DesignSystemPage() {
         <nav style={{
           width: 240, flexShrink: 0, overflowY: 'auto',
           borderRight: '1px solid var(--neutral-stroke)',
-          padding: '20px 0 40px',
+          padding: '16px 0 40px',
         }} className="no-scrollbar">
+          <SidebarSearch items={SEARCH_INDEX} onSelect={scrollTo} />
+          <div style={{ height: 1, background: 'var(--neutral-stroke)', margin: '4px 0 8px' }} />
           {NAV.map(item => (
             <div key={item.id} style={{ marginBottom: 4 }}>
               {'children' in item && item.children ? (
@@ -1054,6 +1296,146 @@ export function DesignSystemPage() {
 
 // ── Sub-components ────────────────────────────────────────────────────────
 
+const SUBLABEL_COLOR: Record<string, string> = {
+  Atom: 'var(--status-stable)',
+  Molecule: 'var(--status-caution)',
+  Organism: 'var(--crimson-base)',
+}
+
+function SidebarSearch({ items, onSelect }: { items: SearchItem[]; onSelect: (id: string) => void }) {
+  const [query, setQuery] = useState('')
+  const [open, setOpen] = useState(false)
+  const [hoveredIdx, setHoveredIdx] = useState(-1)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const results = useMemo(() => {
+    if (!query.trim()) return []
+    const q = query.toLowerCase()
+    return items.filter(item =>
+      item.label.toLowerCase().includes(q) ||
+      item.sublabel.toLowerCase().includes(q)
+    ).slice(0, 9)
+  }, [query, items])
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const handleSelect = (id: string) => {
+    onSelect(id)
+    setQuery('')
+    setOpen(false)
+    setHoveredIdx(-1)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') { setOpen(false); setQuery('') }
+    if (e.key === 'ArrowDown') { e.preventDefault(); setHoveredIdx(i => Math.min(i + 1, results.length - 1)) }
+    if (e.key === 'ArrowUp') { e.preventDefault(); setHoveredIdx(i => Math.max(i - 1, 0)) }
+    if (e.key === 'Enter' && hoveredIdx >= 0 && results[hoveredIdx]) handleSelect(results[hoveredIdx].id)
+  }
+
+  return (
+    <div ref={containerRef} style={{ position: 'relative', padding: '0 12px 12px' }}>
+      <div style={{ position: 'relative' }}>
+        <Search size={13} strokeWidth={2} style={{
+          position: 'absolute', left: 9, top: '50%', transform: 'translateY(-50%)',
+          color: 'var(--charcoal-oslo)', pointerEvents: 'none',
+        }} />
+        <input
+          ref={inputRef}
+          value={query}
+          onChange={e => { setQuery(e.target.value); setOpen(true); setHoveredIdx(-1) }}
+          onFocus={() => { if (query) setOpen(true) }}
+          onKeyDown={handleKeyDown}
+          placeholder="Search…"
+          style={{
+            width: '100%', boxSizing: 'border-box',
+            padding: '7px 28px 7px 28px',
+            fontSize: 12, fontFamily: 'var(--font-sans)',
+            color: 'var(--charcoal-base)',
+            background: 'var(--neutral-sunken)',
+            border: '1px solid var(--neutral-stroke)',
+            borderRadius: 'var(--radius-8)',
+            outline: 'none',
+          }}
+        />
+        {query && (
+          <button
+            onClick={() => { setQuery(''); setOpen(false); inputRef.current?.focus() }}
+            style={{
+              position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
+              background: 'none', border: 'none', cursor: 'pointer', padding: 2,
+              color: 'var(--charcoal-oslo)', display: 'flex', alignItems: 'center',
+            }}
+          >
+            <X size={12} strokeWidth={2} />
+          </button>
+        )}
+      </div>
+
+      {open && query.trim() && (
+        <div style={{
+          position: 'absolute',
+          top: 'calc(100% - 4px)',
+          left: 12, right: 12,
+          background: 'var(--neutral-card)',
+          border: '1px solid var(--neutral-stroke)',
+          borderRadius: 'var(--radius-10)',
+          boxShadow: 'var(--shadow-soft-md)',
+          zIndex: 300,
+          maxHeight: 280,
+          overflowY: 'auto',
+        }} className="no-scrollbar">
+          {results.length > 0 ? results.map((item, idx) => (
+            <button
+              key={item.id}
+              onMouseEnter={() => setHoveredIdx(idx)}
+              onMouseLeave={() => setHoveredIdx(-1)}
+              onClick={() => handleSelect(item.id)}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                width: '100%', textAlign: 'left', gap: 6,
+                padding: '8px 10px',
+                background: hoveredIdx === idx ? 'var(--crimson-5)' : 'transparent',
+                border: 'none',
+                borderBottom: idx < results.length - 1 ? '1px solid var(--neutral-sunken)' : 'none',
+                cursor: 'pointer', fontFamily: 'var(--font-sans)',
+              }}
+            >
+              <span style={{ fontSize: 12, fontWeight: 500, color: 'var(--charcoal-base)', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {item.label}
+              </span>
+              {item.sublabel && (
+                <span style={{
+                  fontSize: 9, fontWeight: 700, flexShrink: 0,
+                  color: SUBLABEL_COLOR[item.sublabel] ?? 'var(--charcoal-oslo)',
+                  background: 'var(--neutral-sunken)',
+                  padding: '2px 5px', borderRadius: 'var(--radius-4)',
+                  textTransform: 'uppercase', letterSpacing: 0.4,
+                }}>
+                  {item.sublabel}
+                </span>
+              )}
+            </button>
+          )) : (
+            <p style={{ fontSize: 12, color: 'var(--charcoal-oslo)', textAlign: 'center', padding: '12px 10px' }}>
+              No results for &ldquo;{query}&rdquo;
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function NavLink({ label, active, onClick, indent = false }: {
   id?: string; label: string; active: boolean; onClick: () => void; indent?: boolean
 }) {
@@ -1122,11 +1504,12 @@ function TypeRow({ cls, label, sample }: { cls: string; label: string; sample: s
 function ComponentRow({ comp, preview }: { comp: ComponentDoc; preview?: React.ReactNode }) {
   const pill = statusPill[comp.status]
   return (
-    <div style={{
+    <div id={`comp-${comp.name}`} style={{
       borderRadius: 10,
       background: 'var(--neutral-sunken)',
       border: '1px solid var(--neutral-stroke)',
       overflow: 'hidden',
+      scrollMarginTop: 32,
     }}>
       {/* Meta row */}
       <div style={{

@@ -95,7 +95,22 @@ export function PatientDetailPage() {
           <h2 className="type-title-l" style={{ color: 'var(--color-text-primary)' }}>Quick Access</h2>
           <div className="flex flex-wrap" style={{ gap: 'var(--space-8)' }}>
             {QUICK_ACCESS.map(item => (
-              <QuickAccessChip key={item.label} icon={item.icon} label={item.label} />
+              <QuickAccessChip
+                key={item.label}
+                icon={item.icon}
+                label={item.label}
+                onClick={
+                  item.label === 'Chat'
+                    ? () => navigate(`/chat/${id}`)
+                    : item.label === 'Reports'
+                      ? () => navigate(`/patients/${id}/reports`)
+                      : item.label === 'Prescription'
+                        ? () => navigate(`/patients/${id}/prescriptions`)
+                        : item.label === 'Notes'
+                          ? () => navigate(`/patients/${id}/notes`)
+                          : undefined
+                }
+              />
             ))}
           </div>
         </div>
@@ -127,9 +142,9 @@ export function PatientDetailPage() {
       </div>
 
       <BottomDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Add to record">
-        <DrawerOption icon={NotebookPen} title="Add note" subtitle="Progress note or observation" onClick={() => setDrawerOpen(false)} />
+        <DrawerOption icon={NotebookPen} title="Add note" subtitle="Progress note or observation" onClick={() => navigate(`/patients/${id}/notes/new?type=progress`)} />
         <DrawerOption icon={FlaskConical} title="Order lab" subtitle="Request tests or a panel" onClick={() => setDrawerOpen(false)} />
-        <DrawerOption icon={ClipboardList} title="New prescription" subtitle="Start or adjust medication" onClick={() => setDrawerOpen(false)} />
+        <DrawerOption icon={ClipboardList} title="New prescription" subtitle="Start or adjust medication" onClick={() => navigate(`/patients/${id}/prescriptions/new`)} />
         <DrawerOption icon={Calendar} title="Schedule visit" subtitle="Book a follow-up or procedure" onClick={() => setDrawerOpen(false)} />
       </BottomDrawer>
     </div>
