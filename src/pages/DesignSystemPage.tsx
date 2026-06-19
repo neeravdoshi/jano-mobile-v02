@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import markSrc from '@/assets/jano-mark.svg'
 import { colorGroups, componentRegistry } from '@/lib/componentRegistry'
 import type { ComponentDoc } from '@/lib/componentRegistry'
-import { House, MessageSquare } from 'lucide-react'
+import { House, MessageSquare, SquarePen } from 'lucide-react'
 import { Button } from '@/components/atoms/Button'
 import { Input } from '@/components/atoms/Input'
 import { Badge } from '@/components/atoms/Badge'
@@ -240,6 +240,9 @@ const componentPreviews: Record<string, React.ReactNode> = {
       <div style={{ border: '1px solid var(--neutral-stroke)', borderRadius: 12, overflow: 'hidden' }}>
         <ScreenHeader variant="chat" title="Ritika Sharma" subtitle="Online now" />
       </div>
+      <div style={{ border: '1px solid var(--neutral-stroke)', borderRadius: 12, overflow: 'hidden', background: 'var(--neutral-app-bg)', paddingTop: 8 }}>
+        <ScreenHeader variant="title" title="Messages" actionIcon={SquarePen} actionLabel="New message" />
+      </div>
     </div>
   ),
 
@@ -251,9 +254,22 @@ const componentPreviews: Record<string, React.ReactNode> = {
   ),
 
   MessageRow: (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 420 }}>
-      <MessageRow initials="RS" avatarColour="red" name="Ritika Sharma" time="09:10AM" preview="Starting the new physical therapy regimen this week." unreadCount={2} />
-      <MessageRow initials="AM" avatarColour="grey" name="Arjun Mehta" time="Yesterday" preview="Can we reschedule tomorrow’s follow-up to the afternoon?" />
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 420 }}>
+      {/* card — floating rounded rows (Chat V1) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--charcoal-oslo)' }}>card · unread + read</p>
+        <MessageRow initials="RS" avatarColour="red" name="Ritika Sharma" time="09:10AM" preview="Starting the new physical therapy regimen this week." unreadCount={2} />
+        <MessageRow initials="AM" avatarColour="grey" name="Arjun Mehta" time="Yesterday" preview="Can we reschedule tomorrow’s follow-up to the afternoon?" />
+      </div>
+
+      {/* flat — one full-bleed white band with indented hairline dividers (Chat V2) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--charcoal-oslo)' }}>flat · one band, indented dividers</p>
+        <div style={{ background: 'var(--neutral-card)', borderRadius: 'var(--radius-12)', overflow: 'hidden', border: '1px solid var(--neutral-stroke)' }}>
+          <MessageRow variant="flat" initials="RS" avatarColour="red" name="Ritika Sharma" time="09:10AM" preview="Starting the new physical therapy regimen this week." unreadCount={2} />
+          <MessageRow variant="flat" showDivider initials="AM" avatarColour="grey" name="Arjun Mehta" time="Yesterday" preview="Can we reschedule tomorrow’s follow-up to the afternoon?" />
+        </div>
+      </div>
     </div>
   ),
 
