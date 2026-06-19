@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* ── Crimson — brand accent (Figma: Crimson scale) ── */
+    --crimson-5:    #FCF8F8;
+    --crimson-10:   #F6E7E7;
+    --crimson-20:   #FADBDB;
+    --crimson-30:   #F4AEAE;
+    --crimson-base: #E54B4B;
+    --crimson-deep: #C71212;
+    --crimson-60:   #B21010;
+    --crimson-80:   #722525;
+    --error-red:    #FF4F04;
+
+    /* ── Charcoal & ink (Figma: Charcoal scale) ── */
+    --charcoal-base:      #252323;   /* also Base Action / Base Text */
+    --charcoal-warm:      #343131;
+    --charcoal-50:        #4F4D4D;   /* Figma "Charcoal 50 Text" */
+    --charcoal-20:        #25232333; /* 20% alpha of base */
+    --charcoal-spotlight: #1E1E24;
+    --charcoal-oslo:      #6D7576;
+    --warm-grey-130:      #BABAB5;
+    --warm-grey-120:      #C9C9C5;
+    --warm-grey:          #B6BBBC;   /* Figma "Warm Grey" — inactive nav, muted icons */
+
+    /* ── Neutrals & surfaces ── */
+    --neutral-app-bg:    #F6F3F3;
+    --neutral-card:      #FFFFFF;
+    --neutral-sunken:    #EFEFED;
+    --neutral-warm-grey: #DEDEDC;
+    --neutral-stroke:    #D6DBDB;
+
+    /* ── Status ── */
+    --status-stable:   #2D9B6F;
+    --status-caution:  #D97706;
+    --status-critical: #E54B4B;
+    --status-pending:  #6D7576;
+
+    /* ── Badge colours (Figma: Badge component) ── */
+    --badge-yellow-bg:   #FFF6CC;
+    --badge-yellow-text: #433B1B;
+    --badge-green-bg:    #D7EAE0;
+    --badge-green-text:  #1B4325;
+    --badge-grey-bg:     #E7E9EF;
+    --badge-grey-text:   #4C4C4C;
+    --badge-blue-bg:     #E7EEF8;
+    --badge-blue-text:   #1B2F43;
+    --badge-red-bg:      var(--crimson-20);
+    --badge-red-text:    var(--crimson-80);
+    --badge-black-bg:    var(--charcoal-base);
+    --badge-black-text:  #FFFFFF;
+
+    /* ── Semantic aliases (used in components) ── */
+    --color-brand:          var(--crimson-base);
+    --color-brand-deep:     var(--crimson-deep);
+    --color-brand-light:    var(--crimson-20);
+    --color-brand-subtle:   var(--crimson-5);
+
+    --color-surface:        var(--neutral-app-bg);
+    --color-surface-card:   var(--neutral-card);
+    --color-surface-sunken: var(--neutral-sunken);
+    --color-border:         var(--neutral-stroke);
+    --color-border-muted:   var(--neutral-warm-grey);
+
+    --color-text-primary:   var(--charcoal-base);
+    --color-text-secondary: var(--charcoal-50);
+    --color-text-muted:     var(--charcoal-oslo);
+    --color-text-inverse:   #FFFFFF;
+    --color-error:          var(--error-red);
+
+    /* ── Typography ── */
+    --font-sans: 'Figtree', system-ui, sans-serif;
+
+    /* Raw size tokens — UI scale */
+    --text-size-xs: 12px;
+    --text-size-s:  14px;
+    --text-size-m:  16px;
+    --text-size-l:  18px;
+    --text-size-xl: 20px;
+
+    /* Raw size tokens — display scale (screen titles & hero numbers) */
+    --text-size-display-s: 24px;
+    --text-size-display-m: 32px;
+    --text-size-display-l: 48px;
+
+    /* Raw weight tokens */
+    --text-weight-regular:  400;
+    --text-weight-medium:   500;
+    --text-weight-semibold: 600;
+    --text-weight-bold:     700;
+
+    /* Raw line-height tokens */
+    --text-lh-auto:    normal;
+    --text-lh-tight:   1.2;
+    --text-lh-display: 1.1;
+    --text-lh-snug:    20px;
+
+    /* ── Spacing scale (Figma: Size tokens) ─────────────────
+       ALL padding, margin, gap, width, height, inset values
+       MUST use one of these tokens. No arbitrary px values.   */
+    --space-2:  2px;
+    --space-4:  4px;
+    --space-6:  6px;
+    --space-8:  8px;
+    --space-12: 12px;
+    --space-14: 14px;
+    --space-16: 16px;
+    --space-18: 18px;
+    --space-20: 20px;
+    --space-24: 24px;
+    --space-28: 28px;
+    --space-32: 32px;
+    --space-40: 40px;
+    --space-48: 48px;
+    --space-56: 56px;
+    --space-64: 64px;
+    --space-80: 80px;
+    --space-96: 96px;
+
+    /* ── Border radius (Figma: Radius & shadow) ──────────────
+       ALL border-radius values MUST use one of these tokens.  */
+    --radius-2:    2px;   /* hairline, inner nested elements  */
+    --radius-4:    4px;   /* chips, variant tags, code blocks */
+    --radius-6:    6px;   /* small badges, swatches           */
+    --radius-8:    8px;   /* icon containers, thumbnails      */
+    --radius-10:   10px;  /* inputs, list rows, small cards   */
+    --radius-12:   12px;  /* cards, modals, bottom sheets     */
+    --radius-16:   16px;  /* large cards, panels              */
+    --radius-20:   20px;  /* DS button pill, tab items        */
+    --radius-24:   24px;  /* FAB, large pills                 */
+    --radius-32:   32px;  /* sheets, drawers                  */
+    --radius-44:   44px;  /* phone shell                      */
+    --radius-full: 9999px; /* circles, pill buttons           */
+
+    /* ── Elevation / shadows ─────────────────────────────────
+       ALL box-shadow values MUST use one of these tokens.    */
+
+    /* Soft — diffuse, ambient depth (cards, panels, modals)  */
+    --shadow-soft-xs: 0 1px 3px 0 rgba(37,35,35,0.06), 0 1px 2px -1px rgba(37,35,35,0.04);
+    --shadow-soft-sm: 0 2px 6px 0 rgba(37,35,35,0.08), 0 2px 4px -2px rgba(37,35,35,0.05);
+    --shadow-soft-md: 0 4px 16px 0 rgba(37,35,35,0.10), 0 2px 8px -2px rgba(37,35,35,0.06);
+    --shadow-soft-lg: 0 8px 32px 0 rgba(37,35,35,0.12), 0 4px 16px -4px rgba(37,35,35,0.08);
+    --shadow-soft-xl: 0 16px 48px 0 rgba(37,35,35,0.15), 0 8px 24px -8px rgba(37,35,35,0.10);
+
+    /* Hard — sharp, defined edges (FAB, active states, tooltips) */
+    --shadow-hard-xs: 0 1px 2px 0 rgba(37,35,35,0.14), 0 1px 1px 0 rgba(37,35,35,0.10);
+    --shadow-hard-sm: 0 2px 4px 0 rgba(37,35,35,0.18), 0 1px 2px 0 rgba(37,35,35,0.12);
+    --shadow-hard-md: 0 4px 8px 0 rgba(37,35,35,0.20), 0 2px 4px 0 rgba(37,35,35,0.14);
+    --shadow-hard-lg: 0 8px 16px 0 rgba(37,35,35,0.22), 0 4px 8px 0 rgba(37,35,35,0.16);
+    --shadow-hard-xl: 0 16px 24px 0 rgba(37,35,35,0.26), 0 8px 12px 0 rgba(37,35,35,0.18);
+
+    /* ── Shell dimensions ── */
+    --shell-width:  390px;
+    --shell-height: 844px;
+    --shell-radius: var(--radius-44);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    color: var(--color-text-primary);
+    background: var(--color-surface);
+  }
+
+  #root { height: 100%; }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* ─────────────────────────────────────────────────────────
+   Typography utilities  —  mirrors Figma text styles
+   Usage: <p className="type-body-m text-[var(--color-text-primary)]">
+   ───────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Figtree — Titles */
+  .type-title-xl {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-xl);
+    font-weight: var(--text-weight-medium);
+    line-height: var(--text-lh-auto);
+  }
+  .type-title-l {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-l);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-lh-auto);
+  }
+  .type-title-m {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-m);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-lh-auto);
+  }
+  .type-title-s {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-s);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-lh-auto);
+  }
+  .type-title-xs {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-xs);
+    font-weight: var(--text-weight-medium);
+    line-height: var(--text-lh-tight);
+  }
+
+  /* Figtree — Body (reading text) */
+  .type-body-m {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-m);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-lh-auto);
+  }
+  .type-body-text-m {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-s);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-lh-snug);
+  }
+  .type-body-s {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-s);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-lh-snug);
+  }
+  .type-body-xs {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-xs);
+    font-weight: var(--text-weight-regular);
+    line-height: var(--text-lh-auto);
+  }
+
+  /* Figtree — Actions (buttons, labels, CTAs) */
+  .type-action-l {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-l);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-lh-auto);
+  }
+  .type-action-m {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-m);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-lh-snug);
+  }
+  .type-action-s {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-s);
+    font-weight: var(--text-weight-semibold);
+    line-height: var(--text-lh-snug);
+  }
+
+  /* Figtree — Overline (eyebrow / category labels) */
+  .type-overline-xs {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-xs);
+    font-weight: var(--text-weight-medium);
+    line-height: var(--text-lh-auto);
+  }
+
+  /* Figtree — Display (screen hero titles & big metric numbers) */
+  .type-display-l {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-display-l);
+    font-weight: var(--text-weight-bold);
+    line-height: var(--text-lh-display);
+    letter-spacing: -0.02em;
+  }
+  .type-display-m {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-display-m);
+    font-weight: var(--text-weight-bold);
+    line-height: var(--text-lh-display);
+    letter-spacing: -0.01em;
+  }
+  .type-display-s {
+    font-family: var(--font-sans);
+    font-size: var(--text-size-display-s);
+    font-weight: var(--text-weight-bold);
+    line-height: var(--text-lh-tight);
+    letter-spacing: -0.01em;
+  }
+}
