@@ -64,7 +64,7 @@ export function ScreenHeader({
           {/* Title + subtitle */}
           <div className="flex flex-col" style={{ gap: 'var(--space-4)' }}>
             <p
-              className="type-title-xl"
+              className="type-title-l"
               style={{ color: 'var(--color-text-primary)', lineHeight: 1 }}
             >
               {title}
