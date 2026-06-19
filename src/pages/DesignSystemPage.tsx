@@ -23,8 +23,10 @@ import { SummaryCard } from '@/components/organisms/SummaryCard'
 import { ChatBubble } from '@/components/molecules/ChatBubble'
 import { DayDivider } from '@/components/molecules/DayDivider'
 import { ThreadNote } from '@/components/molecules/ThreadNote'
+import { MessageBubble } from '@/components/molecules/MessageBubble'
 import { MessageComposer } from '@/components/organisms/MessageComposer'
 import { ChatThreadHeader } from '@/components/organisms/ChatThreadHeader'
+import { ChatComposer } from '@/components/organisms/ChatComposer'
 
 // ── Nav structure ────────────────────────────────────────────────────────
 const NAV = [
@@ -348,6 +350,29 @@ const componentPreviews: Record<string, React.ReactNode> = {
         subtitle="MRN UGI56778"
         participants={['Dr. Mehta', 'Asha', 'Nurse Priya']}
       />
+    </div>
+  ),
+
+  MessageBubble: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxWidth: 420 }}>
+      <MessageBubble
+        direction="incoming"
+        senderName="Ritika Sharma"
+        text="Good morning doctor, I felt a little dizzy after yesterday’s dialysis."
+        time="08:14 AM"
+      />
+      <MessageBubble
+        direction="outgoing"
+        text="Thanks. Please check your BP now and again 30 minutes after standing."
+        time="08:32 AM"
+        status="read"
+      />
+    </div>
+  ),
+
+  ChatComposer: (
+    <div style={{ maxWidth: 420, border: '1px solid var(--neutral-stroke)', borderRadius: 12, overflow: 'hidden' }}>
+      <ChatComposer placeholder="Message" />
     </div>
   ),
 }

@@ -19,6 +19,9 @@ export type { NavItemProps } from './NavItem'
 export { ChatBubble } from './ChatBubble'
 export type { ChatBubbleProps } from './ChatBubble'
 
+export { MessageBubble } from './MessageBubble'
+export type { MessageBubbleProps } from './MessageBubble'
+
 export { DayDivider } from './DayDivider'
 export type { DayDividerProps } from './DayDivider'
 

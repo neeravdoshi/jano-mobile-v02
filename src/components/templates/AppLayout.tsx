@@ -17,15 +17,29 @@ function tabFromPath(pathname: string): BottomNavTab {
   return 'home'
 }
 
+// The screens that ship two layouts and the link that swaps between them.
+function versionToggle(pathname: string): { target: string; label: string } | null {
+  if (pathname === '/patients') return { target: '/patients-v2', label: 'Version 2' }
+  if (pathname === '/patients-v2') return { target: '/patients', label: 'Version 1' }
+
+  // Chat list (WhatsApp-style V2)
+  if (pathname === '/chat') return { target: '/chat-v2', label: 'Version 2' }
+  if (pathname === '/chat-v2') return { target: '/chat', label: 'Version 1' }
+
+  const chat = pathname.match(/^\/chat\/([^/]+?)(\/v2)?$/)
+  if (chat) {
+    const [, id, isV2] = chat
+    return isV2 ? { target: `/chat/${id}`, label: 'Version 1' } : { target: `/chat/${id}/v2`, label: 'Version 2' }
+  }
+  return null
+}
+
 export function AppLayout() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
-  // Version toggle (desktop affordance) — only on the patients screens.
-  const onPatients = pathname === '/patients' || pathname === '/patients-v2'
-  const isV2 = pathname === '/patients-v2'
-  const versionTarget = isV2 ? '/patients' : '/patients-v2'
-  const versionLabel = isV2 ? 'Version 1' : 'Version 2'
+  // Version toggle (desktop affordance) — patients list + open chat thread.
+  const version = versionToggle(pathname)
 
   // The login screen ('/') sits inside the shell but shows no bottom nav.
   const showNav = pathname !== '/'
@@ -101,10 +115,10 @@ export function AppLayout() {
             </span>
           </Link>
 
-          {/* Version toggle — appears only on the patients screen */}
-          {onPatients && (
+          {/* Version toggle — appears only on screens that ship two layouts */}
+          {version && (
             <Link
-              to={versionTarget}
+              to={version.target}
               style={{
                 position: 'absolute',
                 top: 54,
@@ -139,7 +153,7 @@ export function AppLayout() {
                 color: 'var(--crimson-deep)',
                 letterSpacing: -0.1,
               }}>
-                {versionLabel}
+                {version.label}
               </span>
             </Link>
           )}

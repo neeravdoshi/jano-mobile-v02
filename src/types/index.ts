@@ -115,6 +115,7 @@ export interface ChatThread {
 
 // ── Chat conversation (open thread) ──────────────────────────────────────────
 export type ChatMessageDirection = 'incoming' | 'outgoing'
+export type ChatMessageStatus = 'sent' | 'delivered' | 'read'
 
 export interface ChatMessage {
   id: string
@@ -123,6 +124,7 @@ export interface ChatMessage {
   text: string
   time: string             // display string, e.g. "08:14 AM"
   channel?: string         // delivery note, e.g. "Delivered through SMS"
+  status?: ChatMessageStatus  // outgoing only — drives the read ticks (V2)
 }
 
 // A conversation renders as an ordered list of these items.

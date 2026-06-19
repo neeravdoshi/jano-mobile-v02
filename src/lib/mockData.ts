@@ -55,7 +55,7 @@ export const careConversation: ChatConversation = {
       kind: 'message',
       message: {
         id: 'm-2', senderName: 'Dr. Mehta', direction: 'outgoing', time: '06:40 PM',
-        channel: 'Delivered through SMS',
+        channel: 'Delivered through SMS', status: 'read',
         text: 'Yes, continue it with dinner tonight. We’ll review the dose again after the next phosphorus report.',
       },
     },
@@ -78,7 +78,7 @@ export const careConversation: ChatConversation = {
     {
       kind: 'message',
       message: {
-        id: 'm-5', senderName: 'Dr. Mehta', direction: 'outgoing', time: '08:32 AM',
+        id: 'm-5', senderName: 'Dr. Mehta', direction: 'outgoing', time: '08:32 AM', status: 'read',
         text: 'Thanks Asha. Ritika, please check your BP now and again 30 minutes after standing.',
       },
     },

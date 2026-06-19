@@ -19,5 +19,8 @@ export type { SummaryCardProps, SummaryItem } from './SummaryCard'
 export { MessageComposer } from './MessageComposer'
 export type { MessageComposerProps } from './MessageComposer'
 
+export { ChatComposer } from './ChatComposer'
+export type { ChatComposerProps } from './ChatComposer'
+
 export { ChatThreadHeader } from './ChatThreadHeader'
 export type { ChatThreadHeaderProps } from './ChatThreadHeader'
