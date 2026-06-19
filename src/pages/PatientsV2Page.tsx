@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 import { ScreenHeader } from '@/components/organisms'
 import { Badge, type BadgeColour } from '@/components/atoms'
@@ -21,6 +22,7 @@ const encounterColour: Record<EncounterType, BadgeColour> = {
  * rows, so the eye scans names instead of counting boxes.
  */
 export function PatientsV2Page() {
+  const navigate = useNavigate()
   const [filter, setFilter] = useState<Filter>('All')
   const [query, setQuery] = useState('')
 
@@ -84,6 +86,7 @@ export function PatientsV2Page() {
               <button
                 key={p.id}
                 type="button"
+                onClick={() => navigate(`/patients/${p.id}`)}
                 className="flex w-full items-center text-left transition-colors duration-150 hover:bg-[var(--neutral-sunken)]"
                 style={{
                   gap: 'var(--space-12)',

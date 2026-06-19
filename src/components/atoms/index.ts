@@ -12,3 +12,6 @@ export type { AvatarProps, AvatarColour } from './Avatar'
 
 export { StatCard } from './StatCard'
 export type { StatCardProps } from './StatCard'
+
+export { Fab } from './Fab'
+export type { FabProps } from './Fab'

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ChatThreadHeader, ChatComposer } from '@/components/organisms'
+import { ChatThreadHeader, MessageComposer } from '@/components/organisms'
 import { MessageBubble, DayDivider, ThreadNote } from '@/components/molecules'
 import { currentDoctor, getConversation } from '@/lib/mockData'
 import chatMotif from '@/assets/chat-motif.svg'
@@ -100,6 +100,7 @@ export function ChatThreadV2Page() {
           return (
             <MessageBubble
               key={m.id}
+              variant="whatsapp"
               direction={m.direction}
               text={m.text}
               time={m.time}
@@ -111,7 +112,7 @@ export function ChatThreadV2Page() {
         })}
       </div>
 
-      <ChatComposer placeholder="Message" value={draft} onChange={setDraft} onSend={send} />
+      <MessageComposer variant="docked" placeholder="Message" value={draft} onChange={setDraft} onSend={send} />
     </div>
   )
 }

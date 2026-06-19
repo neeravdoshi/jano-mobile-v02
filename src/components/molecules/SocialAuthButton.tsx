@@ -12,7 +12,7 @@ export function SocialAuthButton({ icon, label, onClick, className }: SocialAuth
   return (
     <Button
       variant="outline"
-      size="lg"
+      size="md"
       fullWidth
       onClick={onClick}
       className={cn('justify-center gap-3', className)}

@@ -141,6 +141,38 @@ export interface ChatConversation {
   items: ChatThreadItem[]
 }
 
+// ── Patient clinical timeline ────────────────────────────────────────────────
+// The patient-detail "Clinical Record" — a journey of dated events (medications,
+// labs, reports, prescriptions). Each entry renders as an EventCard on a rail.
+export type TimelineCategory = 'Medication' | 'Prescription' | 'Lab' | 'Report' | 'Visit' | 'Dialysis'
+
+// A medication detail card nested in the event (→ MedicationInset).
+export interface TimelineMedicationInset {
+  kind: 'medication'
+  name: string
+  detail: string
+  status?: string
+}
+
+// A lab / report / prescription row with a trailing action (→ RecordInset).
+export interface TimelineRecordInset {
+  kind: 'record'
+  title: string
+  meta?: string
+}
+
+export type TimelineInsetData = TimelineMedicationInset | TimelineRecordInset
+
+export interface TimelineEntry {
+  id: string
+  date: string             // display string, e.g. "20 Aug 2025"
+  category: TimelineCategory
+  title: string
+  meta?: string            // "Initial renal regimen · Dr. Mehta · Nephrology"
+  body: string
+  inset?: TimelineInsetData
+}
+
 // ── Lab Result ─────────────────────────────────────────────────────────────
 export type LabResultFlag = 'high' | 'low' | 'critical-high' | 'critical-low' | 'normal'
 

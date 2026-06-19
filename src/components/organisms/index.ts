@@ -14,16 +14,22 @@ export { AlertCard } from './AlertCard'
 export type { AlertCardProps } from './AlertCard'
 
 export { SummaryCard } from './SummaryCard'
-export type { SummaryCardProps, SummaryItem } from './SummaryCard'
+export type { SummaryCardProps, SummaryItem, SummaryCardVariant, DaySegment } from './SummaryCard'
 
 export { MessageComposer } from './MessageComposer'
-export type { MessageComposerProps } from './MessageComposer'
-
-export { ChatComposer } from './ChatComposer'
-export type { ChatComposerProps } from './ChatComposer'
+export type { MessageComposerProps, MessageComposerVariant } from './MessageComposer'
 
 export { ChatThreadHeader } from './ChatThreadHeader'
 export type { ChatThreadHeaderProps } from './ChatThreadHeader'
 
 export { UnreadPatientChatsCard } from './UnreadPatientChatsCard'
 export type { UnreadPatientChatsCardProps, UnreadChatItem } from './UnreadPatientChatsCard'
+
+export { EventCard } from './EventCard'
+export type { EventCardProps, EventCardTheme } from './EventCard'
+
+export { BottomDrawer } from './BottomDrawer'
+export type { BottomDrawerProps } from './BottomDrawer'
+
+export { Timeline } from './Timeline'
+export type { TimelineProps, TimelineRenderEntry } from './Timeline'

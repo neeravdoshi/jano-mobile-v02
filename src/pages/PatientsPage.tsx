@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ScreenHeader, PatientCard } from '@/components/organisms'
 import { SearchBar, FilterTabs, type FilterTabOption } from '@/components/molecules'
 import { currentDoctor, patients } from '@/lib/mockData'
@@ -7,6 +8,7 @@ import type { EncounterType } from '@/types'
 type Filter = 'All' | EncounterType
 
 export function PatientsPage() {
+  const navigate = useNavigate()
   const [filter, setFilter] = useState<Filter>('All')
   const [query, setQuery] = useState('')
 
@@ -73,6 +75,7 @@ export function PatientsPage() {
             ward={p.ward}
             bed={p.bed}
             mrn={p.mrn}
+            onClick={() => navigate(`/patients/${p.id}`)}
           />
         ))}
 

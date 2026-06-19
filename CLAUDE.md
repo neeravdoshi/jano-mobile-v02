@@ -8,6 +8,12 @@ This is a **prototype**. No backend. All data is mocked/static.
 
 ---
 
+## Git workflow
+
+> **STRICT RULE:** Never `git commit` or `git push` to `main` (or any branch) unless the user explicitly asks for it in that message. Make and verify changes in the working tree and stop there. Wait for an explicit "commit", "push", or equivalent instruction before running either command.
+
+---
+
 ## Tech stack
 
 | Layer | Choice | Why |
@@ -368,32 +374,55 @@ npx tsc --noEmit # type-check only
 
 ---
 
-## What is not built yet
+## Build status
 
-- [x] Login screen (`/login` → `LoginPage.tsx`)
-- [x] Button atom (primary / outline / ghost / destructive, sizes sm/md/lg)
-- [x] Input atom (bare input with error state)
-- [x] FormField molecule (label + Input + error/hint)
-- [x] DividerWithLabel molecule (OR separator)
-- [x] SocialAuthButton molecule (OAuth provider button)
-- [x] Bottom tab bar navigation (BottomNavigation organism + NavItem molecule)
-- [x] Badge atom (yellow / green / grey / blue / red / black, full-pill, 10px uppercase)
-- [x] FilterPill molecule (selected/unselected × with/without count)
-- [x] ScreenHeader organism (Default / No Arrow / Doctor / Chat variants)
-- [x] SearchBar molecule (default + with-filter variants)
-- [x] FilterTabs molecule (scrollable row of FilterPills, active state)
-- [x] PatientCard organism (default + highlighted variants)
-- [x] Patients list page (`/patients`) — header + search + filter tabs + live filtered list; Sign in routes here
-- [x] Avatar atom (circular initials, colour variants sharing Badge tokens)
-- [x] MessageRow organism (chat list row — read + unread variants)
-- [x] Chat page (`/chat`) — header + search + filter tabs + white-card message list; live filter + name search
-- [x] AlertCard organism (critical alert spotlight — dark card, crimson eyebrow + counter, status tag + ghost action)
-- [x] Open chat conversation (`/chat/:id`) — ChatThreadHeader + day dividers + bubbles + thread note + floating MessageComposer (transcript scrolls behind it)
-- [x] Open chat V2 (`/chat/:id/v2`) — WhatsApp-inspired: MessageBubble (tail, inline time + read ticks), docked ChatComposer (mic↔send), functional send (appends bubble, ticks go read, auto-scroll)
-- [ ] Remaining atoms: Icon
-- [ ] Any organisms: NoteCard
+### Atoms
+- [x] Button (primary / outline / ghost / destructive · sm/md/lg)
+- [x] Input (bare input with error state)
+- [x] Badge (yellow / green / grey / blue / red / black, full-pill, 10px uppercase)
+- [x] Avatar (circular initials + image, colour variants sharing Badge tokens)
+- [x] StatCard (white tile: value + Lucide icon + uppercase crimson-80 caption)
+- [x] Fab (floating action button: 64px crimson circle + white plus; morphs to white surface + crimson × when `open`; pairs with BottomDrawer)
+- [ ] Icon
+
+### Molecules
+- [x] FormField (label + Input + error/hint)
+- [x] DividerWithLabel (OR separator)
+- [x] SocialAuthButton (OAuth provider button)
+- [x] FilterPill (selected/unselected × with/without count)
+- [x] FilterTabs (scrollable row of FilterPills, active state)
+- [x] SearchBar (default + with-filter variants)
+- [x] NavItem (bottom-nav item, active/inactive)
+- [x] StatCardGroup (equal-width row of StatCards)
+- [x] MessageBubble (conversation bubble, two layout variants: `classic` — sender + time above, squared outer-top corner — and `whatsapp` — tail, inline time + read ticks; each incoming/outgoing)
+- [x] DayDivider (centered uppercase day pill)
+- [x] ThreadNote (centered muted system note)
+
+### Organisms
+- [x] BottomNavigation (Home / Patients / Schedule / Chat + center quick action)
+- [x] ScreenHeader (default / no-arrow / doctor / chat / **title**)
+- [x] PatientCard (default + highlighted)
+- [x] MessageRow (chat list row — **card** + **flat** layouts, read/unread)
+- [x] AlertCard (critical alert spotlight — dark card, eyebrow + counter, status tag + ghost action)
+- [x] SummaryCard (dark day banner — **breakdown**: collapsible count + rows · **agenda**: doctor's-day grid + next-up)
+- [x] MessageComposer (chat composer, two layout variants: `floating` — pill over the transcript, attach + input + voice + send — and `docked` — WhatsApp-style bar, attach + input + camera, trailing mic↔send toggle, Enter sends)
+- [x] ChatThreadHeader (open-chat header: back, name+MRN, expand, participants)
+- [x] UnreadPatientChatsCard ("Needs Attention" card with inset unread rows)
+- [ ] NoteCard
+
+### Pages
+- [x] Login (`/` index → `LoginPage`) — real `jano-mark.svg` logo; Sign in simulates auth → `/dashboard`
+- [x] Home / dashboard — **V1 agenda / doctor's-day summary** (`/dashboard`, default) + **V2 dialysis-breakdown summary** (`/dashboard-v2`); stat cards + search + needs-attention
+- [x] Patients list — **V1 distilled** (`/patients`, default) + **V2 classic cards** (`/patients-v2`); live encounter-type filter + name/MRN search
+- [x] Chat list — **V1 cards** (`/chat`, default) + **V2 WhatsApp-style flat** (`/chat-v2`); shared `ScreenHeader` title variant
+- [x] Open chat conversation — **V1 floating composer** (`/chat/:id`) + **V2 WhatsApp-style** (`/chat/:id/v2`, functional send)
+- [x] Design System (`/design-system`) — live component previews
+- [ ] Schedule page (`/schedule` — still a placeholder)
+
+### Cross-cutting
+- [x] Desktop "Version" toggle pill (AppLayout) — swaps V1/V2 on patients + chat screens
+- [x] Real PWA icons (regenerated from `jano-logo.png`, square/centered + maskable)
 - [ ] Framer Motion page transitions (deliberately deferred)
-- [ ] Real PWA icons (placeholder paths in vite.config.ts)
 - [ ] Dark mode
 
 ---
@@ -429,4 +458,10 @@ npx tsc --noEmit # type-check only
 | 2026-06-19 | Built chat **list V2** `/chat-v2` (WhatsApp-style, in-token). Page `ChatV2Page` (rows inline, mirrors the `PatientsV2Page` distilled pattern — no shared component). Drops the doctor `ScreenHeader` for a `type-display-m` "Messages" title + crimson compose button (SquarePen); reuses SearchBar + FilterTabs (All/Patients/Team). The V1 floating row-cards collapse into one **full-bleed white band with indented hairline dividers** (border rides the content column so it insets past the 48px photo avatar). Unread keeps the MessageRow convention: crimson time, `type-body-s`/`charcoal-50` preview, crimson count badge. Rows open the V2 thread (`/chat/:id/v2`). `versionToggle()` extended for `/chat ↔ /chat-v2`; V1 stays default |
 | 2026-06-19 | PWA install polish: regenerated icons from `jano-logo.png` (square, centered) so the home-screen icon isn't off-center; added separate `icon-512-maskable.png` (white bg) for PWABuilder. Headers: replaced the fixed 48px Dynamic-Island spacer with a responsive `.header-safe-top` (48px desktop to clear the island, `max(env(safe-area-inset-top),12px)` on mobile) — kills the dead white space at the top of the installed PWA. `ScreenHeader` title → `type-title-l` (18px) to match the patient-name header |
 | 2026-06-19 | Folded the inline `/chat-v2` rows into `MessageRow` as a **`flat` variant** (vs the existing `card`): full-bleed, 48px avatar, `showDivider` hairline, crimson time on unread, 20px badge. `ChatV2Page` now composes `<MessageRow variant="flat" showDivider={i!==0} />` instead of bespoke markup; registry + DS preview updated to show card vs flat. (Earlier note above re "rows inline, no shared component" is now superseded.) |
+| 2026-06-19 | Built **EventCard** organism (Figma 160-3936 variant set, 8 variants) — clinical timeline event card. Two header modes: **icon** (crimson-20 chip + title + meta line; body sits *after* the inset) and **collapsible** (title + chevron; body *before* the inset, which toggles on expand). `theme` light (warm-white, charcoal title) / dark (charcoal-base, crimson-20 title, white body). Inset is a `children` slot, filled by 3 new molecules: **MedicationInset** (white/charcoal-warm detail card: name + dosage, optional green "New start" status pill), **AppointmentProgress** (crimson-20/25% panel, connected crimson tick rail + step labels + times via `justify-between` columns), **NextCheckupRow** (label + crimson-20/40% date pill + crimson arrow button). The 8 Figma variants map to combinations of `icon`/`collapsible`/`theme`/children (Variant5 & Variant7 are identical dark-expanded dupes). Registry + DS previews for all 4. NOTE: outer card padding is `--space-12` (Figma uses 13px, off-scale → rounded to nearest token); med-name uses `type-title-xs` (12/500, Figma 12/600 — no 12/600 class) |
+| 2026-06-19 | Merged `ChatComposer` into **`MessageComposer`** as variants of one organism (per feedback, mirrors the bubble merge). `MessageComposer` now takes `variant: 'floating' | 'docked'` (default `floating`) — `floating` is the V1 pill (attach + input + voice + crimson send, soft-lg shadow), `docked` is the V2 WhatsApp bar (sunken field: attach + input + camera; trailing mic↔send toggle; Enter sends; added `onCamera`). `ChatThreadPage` → `variant="floating"`, `ChatThreadV2Page` → `variant="docked"`. Deleted `ChatComposer.tsx`; registry collapsed to one entry; DS preview shows both variants |
+| 2026-06-19 | Built **`Fab`** atom (Figma 154-3160) — floating action button: 64px (`--space-64`) crimson circle + white `Plus`; when `open`, surface flips to white, plus colour to crimson, and the icon rotates 45° into an × (CSS transition, no Framer Motion). Shadows `--shadow-hard-lg` (closed) / `--shadow-hard-xl` (open). Positioning left to the caller via `className`. Intended to toggle the existing `BottomDrawer` (wiring deferred — "we'll use it later"). Registry + DS preview (closed / open / tap-to-toggle) |
+| 2026-06-19 | Merged `ChatBubble` into **`MessageBubble`** as variants of one molecule (per feedback: "chat bubbles should be the same as message bubbles but variants of each other"). `MessageBubble` now takes `variant: 'classic' | 'whatsapp'` (default `whatsapp`) — `classic` is the old ChatBubble (sender + time above, squared outer-top corner, optional `channel` note); `whatsapp` is the V2 look (tail, inline time + read ticks, colour-coded group sender). `ChatThreadPage` → `variant="classic"`, `ChatThreadV2Page` → `variant="whatsapp"`. Deleted `ChatBubble.tsx`; registry collapsed to one entry; DS preview shows both variants side by side |
 | 2026-06-19 | Built the **doctor home screen** `/dashboard` (Figma 181-6140), shown after sign-in (login now routes here, not `/patients`; replaced the placeholder `DashboardPage`). New `StatCard` atom (181-6797: white tile, 20px value over a Lucide icon + uppercase crimson-80 caption — Referrals/OPD/Inpatient → `Share2`/`Stethoscope`/`BedDouble`), `StatCardGroup` molecule (181-6796: equal-width row), `UnreadPatientChatsCard` organism (181-6412: white "Needs Attention" card, crimson `MessageSquare` eyebrow + "View All", warm-white inset rows). Inset rows keep time + preview **muted even when unread** — only the crimson count badge carries urgency (per Figma, unlike the chat-list rows). `HomePage` assembles header + reused `SummaryCard` (18 dialysis) + stats + `SearchBar` + needs-attention; unread list derives from `chatThreads`. Registry + DS previews for all 3. NOTE: stat value uses `type-title-xl` (20px/500) — Figma is 20px/600 but no 20/600 type class exists; size match chosen over weight |
+| 2026-06-19 | Added **agenda** variant to `SummaryCard` + a **Home V2** (`/dashboard-v2`) — a richer "doctor's day" take on the prime banner (the flat "18 dialysis" was under-using the slot). Agenda layout: crimson eyebrow + date → hero ("24 patients across 2 hospitals") → 2×2 segment grid (New `UserPlus` / Follow-ups `RotateCcw` / **Urgent** `TriangleAlert` crimson-tinted tile + crimson value / Procedures `Activity`) on charcoal-warm tiles → a "Next up" footnote row (`Clock`, crimson accent). New `DaySegment` type + `variant: 'breakdown' \| 'agenda'` prop; breakdown layout untouched. `HomeV2Page` mirrors HomePage, swapping only the banner. `versionToggle()` extended for `/dashboard ↔ /dashboard-v2`; V1 stays the post-login default. Registry variants → breakdown/agenda; DS preview shows all three (collapsed, expanded, agenda) |
+| 2026-06-19 | Made the **agenda summary the default home** (`/dashboard` → `HomeV2Page`; dialysis-breakdown demoted to `/dashboard-v2`) — mirrors the patients V1/V2 swap; login still lands on `/dashboard`. Compacted the agenda card height (/layout + /polish, no font-size or 2×2-grid change): icon moved from its own row to a quiet top-right accent inline with the value (label below); eyebrow+hero grouped (gap `--space-4`); section + tile + footnote vertical padding/gaps tightened (`--space-12` → `--space-8`). ~⅓ shorter, so stats + search + needs-attention now sit above the fold |

@@ -67,7 +67,7 @@ export function LoginPage() {
           onChange={e => setEmail(e.target.value)}
           autoComplete="email"
         />
-        <Button variant="primary" size="lg" fullWidth onClick={signIn}>
+        <Button variant="primary" size="md" fullWidth onClick={signIn}>
           Sign in
         </Button>
       </div>
@@ -89,27 +89,27 @@ export function LoginPage() {
         <div className="flex items-center gap-1.5">
           <Link
             to="#"
-            className="type-action-m"
+            className="type-action-s"
             style={{ color: 'var(--color-brand)' }}
           >
             Forgot password?
           </Link>
-          <span className="type-body-s" style={{ color: 'var(--color-text-muted)' }}>
+          <span className="type-body-text-m" style={{ color: 'var(--color-text-muted)' }}>
             ·
           </span>
           <Link
             to="#"
-            className="type-action-m"
+            className="type-action-s"
             style={{ color: 'var(--color-brand)' }}
           >
             Forgot username?
           </Link>
         </div>
-        <p className="type-action-m" style={{ color: 'var(--color-text-muted)' }}>
+        <p className="type-body-text-m" style={{ color: 'var(--color-text-muted)' }}>
           New to Jano?{' '}
           <Link
             to="#"
-            className="type-action-m"
+            className="type-action-s"
             style={{ color: 'var(--color-brand)' }}
           >
             Request access

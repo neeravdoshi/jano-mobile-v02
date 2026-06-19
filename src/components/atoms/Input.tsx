@@ -8,7 +8,7 @@ export function Input({ hasError, className, ...props }: InputProps) {
   return (
     <input
       className={cn(
-        'w-full rounded-xl px-4 py-3.5 outline-none transition-colors duration-150 type-body-m',
+        'w-full rounded-xl px-4 py-3 outline-none transition-colors duration-150 type-body-m',
         'bg-[var(--color-surface-sunken)] text-[var(--color-text-primary)]',
         'placeholder:text-[var(--color-text-muted)]',
         'border-[1.5px]',

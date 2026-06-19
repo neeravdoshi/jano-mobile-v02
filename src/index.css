@@ -68,6 +68,7 @@
     --color-text-muted:     var(--charcoal-oslo);
     --color-text-inverse:   #FFFFFF;
     --color-error:          var(--error-red);
+    --color-scrim:          rgba(0, 0, 0, 0.5);   /* modal / bottom-drawer backdrop */
 
     /* ── Typography ── */
     --font-sans: 'Figtree', system-ui, sans-serif;

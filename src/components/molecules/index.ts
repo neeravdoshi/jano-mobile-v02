@@ -16,11 +16,8 @@ export type { SearchBarProps } from './SearchBar'
 export { NavItem } from './NavItem'
 export type { NavItemProps } from './NavItem'
 
-export { ChatBubble } from './ChatBubble'
-export type { ChatBubbleProps } from './ChatBubble'
-
 export { MessageBubble } from './MessageBubble'
-export type { MessageBubbleProps } from './MessageBubble'
+export type { MessageBubbleProps, MessageBubbleVariant } from './MessageBubble'
 
 export { DayDivider } from './DayDivider'
 export type { DayDividerProps } from './DayDivider'
@@ -30,4 +27,28 @@ export type { ThreadNoteProps } from './ThreadNote'
 
 export { StatCardGroup } from './StatCardGroup'
 export type { StatCardGroupProps, StatItem } from './StatCardGroup'
+
+export { MedicationInset } from './MedicationInset'
+export type { MedicationInsetProps } from './MedicationInset'
+
+export { AppointmentProgress } from './AppointmentProgress'
+export type { AppointmentProgressProps, AppointmentStep } from './AppointmentProgress'
+
+export { NextCheckupRow } from './NextCheckupRow'
+export type { NextCheckupRowProps } from './NextCheckupRow'
+
+export { DrawerOption } from './DrawerOption'
+export type { DrawerOptionProps } from './DrawerOption'
+
+export { RecordInset } from './RecordInset'
+export type { RecordInsetProps } from './RecordInset'
+
+export { TimelineEntryHeader } from './TimelineEntryHeader'
+export type { TimelineEntryHeaderProps } from './TimelineEntryHeader'
+
+export { QuickAccessChip } from './QuickAccessChip'
+export type { QuickAccessChipProps } from './QuickAccessChip'
+
+export { ReadStatusToggle } from './ReadStatusToggle'
+export type { ReadStatusToggleProps } from './ReadStatusToggle'
 

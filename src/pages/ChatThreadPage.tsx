@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ChatThreadHeader, MessageComposer } from '@/components/organisms'
-import { ChatBubble, DayDivider, ThreadNote } from '@/components/molecules'
+import { MessageBubble, DayDivider, ThreadNote } from '@/components/molecules'
 import { currentDoctor, getConversation } from '@/lib/mockData'
 
 export function ChatThreadPage() {
@@ -37,8 +37,9 @@ export function ChatThreadPage() {
           if (item.kind === 'note') return <ThreadNote key={`n-${i}`}>{item.text}</ThreadNote>
           const m = item.message
           return (
-            <ChatBubble
+            <MessageBubble
               key={m.id}
+              variant="classic"
               senderName={m.senderName}
               time={m.time}
               text={m.text}
@@ -55,6 +56,7 @@ export function ChatThreadPage() {
         style={{ padding: '0 var(--space-16) var(--space-16)' }}
       >
         <MessageComposer
+          variant="floating"
           placeholder={`Reply as ${currentDoctor.name}`}
           value={draft}
           onChange={setDraft}

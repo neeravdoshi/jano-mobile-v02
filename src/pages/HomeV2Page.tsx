@@ -1,20 +1,28 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Share2, Stethoscope, BedDouble } from 'lucide-react'
-import { ScreenHeader, SummaryCard, UnreadPatientChatsCard } from '@/components/organisms'
+import { Share2, Stethoscope, BedDouble, UserPlus, RotateCcw, TriangleAlert, Activity, Clock } from 'lucide-react'
+import { ScreenHeader, SummaryCard, UnreadPatientChatsCard, type DaySegment } from '@/components/organisms'
 import { SearchBar, StatCardGroup, type StatItem } from '@/components/molecules'
 import { currentDoctor, chatThreads } from '@/lib/mockData'
 
 /**
- * Doctor home screen (Figma 181:6140) — what loads after sign-in.
- * Doctor header → dialysis summary banner → daily stat tiles → search →
- * "Needs Attention" unread-chats card. Assembled from existing + new components.
+ * Home screen — Version 2.
+ * Same scaffold as HomePage, but the flat "18 dialysis" banner is replaced by the
+ * agenda SummaryCard: the doctor's day broken into who they're seeing (new /
+ * follow-up / urgent / procedures) plus what's next — a richer use of the prime slot.
  */
-export function HomePage() {
+export function HomeV2Page() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
 
-  // Lucide stand-ins for the Figma custom glyph set (Referrals / OPD / Inpatient).
+  // The day's shape: who the doctor is actually seeing.
+  const daySegments: DaySegment[] = [
+    { id: 'new',       label: 'New patients', value: 5,  icon: UserPlus },
+    { id: 'followup',  label: 'Follow-ups',   value: 14, icon: RotateCcw },
+    { id: 'urgent',    label: 'Urgent',       value: 3,  icon: TriangleAlert, tone: 'urgent' },
+    { id: 'procedure', label: 'Procedures',   value: 2,  icon: Activity },
+  ]
+
   const stats: StatItem[] = [
     { value: 6,  label: 'Referrals', icon: Share2 },
     { value: 23, label: 'OPD',       icon: Stethoscope },
@@ -35,15 +43,13 @@ export function HomePage() {
         style={{ padding: 'var(--space-12)', gap: 'var(--space-12)' }}
       >
         <SummaryCard
-          count={18}
-          title="Dialysis appointments scheduled today"
-          items={[
-            { label: 'In queue',    value: 5 },
-            { label: 'Pre-session', value: 2 },
-            { label: 'On dialysis', value: 6 },
-            { label: 'Post-session', value: 1 },
-            { label: 'Completed',   value: 4 },
-          ]}
+          variant="agenda"
+          eyebrow="Today"
+          meta="Tue, 19 Jun"
+          count={24}
+          title="patients across 2 hospitals"
+          segments={daySegments}
+          footnote={{ icon: Clock, text: 'Next: Ward A rounds at Sparsh Yelahanka · 9:30 AM', accent: true }}
         />
 
         <StatCardGroup items={stats} />

@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom'
 import markSrc from '@/assets/jano-mark.svg'
 import { colorGroups, componentRegistry } from '@/lib/componentRegistry'
 import type { ComponentDoc } from '@/lib/componentRegistry'
-import { House, MessageSquare, SquarePen, Share2, Stethoscope, BedDouble } from 'lucide-react'
+import { House, MessageSquare, SquarePen, Share2, Stethoscope, BedDouble, UserPlus, RotateCcw, TriangleAlert, Activity, Clock } from 'lucide-react'
 import { Button } from '@/components/atoms/Button'
 import { Input } from '@/components/atoms/Input'
 import { Badge } from '@/components/atoms/Badge'
 import { Avatar } from '@/components/atoms/Avatar'
 import { StatCard } from '@/components/atoms/StatCard'
+import { Fab } from '@/components/atoms/Fab'
 import { StatCardGroup } from '@/components/molecules/StatCardGroup'
 import { UnreadPatientChatsCard } from '@/components/organisms/UnreadPatientChatsCard'
 import { FormField } from '@/components/molecules/FormField'
@@ -23,13 +24,18 @@ import { PatientCard } from '@/components/organisms/PatientCard'
 import { MessageRow } from '@/components/organisms/MessageRow'
 import { AlertCard } from '@/components/organisms/AlertCard'
 import { SummaryCard } from '@/components/organisms/SummaryCard'
-import { ChatBubble } from '@/components/molecules/ChatBubble'
 import { DayDivider } from '@/components/molecules/DayDivider'
 import { ThreadNote } from '@/components/molecules/ThreadNote'
 import { MessageBubble } from '@/components/molecules/MessageBubble'
 import { MessageComposer } from '@/components/organisms/MessageComposer'
 import { ChatThreadHeader } from '@/components/organisms/ChatThreadHeader'
-import { ChatComposer } from '@/components/organisms/ChatComposer'
+import { EventCard } from '@/components/organisms/EventCard'
+import { MedicationInset } from '@/components/molecules/MedicationInset'
+import { AppointmentProgress } from '@/components/molecules/AppointmentProgress'
+import { NextCheckupRow } from '@/components/molecules/NextCheckupRow'
+import { DrawerOption } from '@/components/molecules/DrawerOption'
+import { BottomDrawer } from '@/components/organisms/BottomDrawer'
+import { Pill, FileText, LineChart, ClipboardList } from 'lucide-react'
 
 // ── Nav structure ────────────────────────────────────────────────────────
 const NAV = [
@@ -133,6 +139,53 @@ function BottomNavPreview() {
   )
 }
 
+function BottomDrawerPreview() {
+  const [open, setOpen] = useState(false)
+  return (
+    // Bounded relative frame — the scrim + sheet are positioned within it
+    <div
+      style={{
+        position: 'relative',
+        width: 320,
+        height: 420,
+        borderRadius: 16,
+        overflow: 'hidden',
+        border: '1px solid var(--neutral-stroke)',
+        background: 'var(--neutral-app-bg)',
+      }}
+    >
+      <div style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+        <Button variant="primary" size="md" onClick={() => setOpen(true)}>Open drawer</Button>
+      </div>
+      <BottomDrawer open={open} onClose={() => setOpen(false)} title="Add New">
+        <DrawerOption icon={FileText} title="Add Notes" subtitle="Capture a progress note" onClick={() => setOpen(false)} />
+        <DrawerOption icon={LineChart} title="Add Reports" subtitle="Capture a new report" onClick={() => setOpen(false)} />
+        <DrawerOption icon={ClipboardList} title="Add Prescription" subtitle="Capture a prescription" onClick={() => setOpen(false)} />
+      </BottomDrawer>
+    </div>
+  )
+}
+
+function FabPreview() {
+  const [open, setOpen] = useState(false)
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+        <Fab open={false} />
+        <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--charcoal-oslo)' }}>closed</span>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+        <Fab open />
+        <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--charcoal-oslo)' }}>open</span>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+        <Fab open={open} onClick={() => setOpen(v => !v)} />
+        <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--charcoal-oslo)' }}>tap to toggle</span>
+      </div>
+    </div>
+  )
+}
+
 // ── Live preview nodes per built component ───────────────────────────────
 const componentPreviews: Record<string, React.ReactNode> = {
   Button: (
@@ -215,6 +268,8 @@ const componentPreviews: Record<string, React.ReactNode> = {
       <StatCard value={9} label="Inpatient" icon={BedDouble} className="flex-1" />
     </div>
   ),
+
+  Fab: <FabPreview />,
 
   StatCardGroup: (
     <div style={{ maxWidth: 360 }}>
@@ -356,23 +411,19 @@ const componentPreviews: Record<string, React.ReactNode> = {
           { label: 'Completed', value: 4 },
         ]}
       />
-    </div>
-  ),
-
-  ChatBubble: (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 420 }}>
-      <ChatBubble
-        direction="incoming"
-        senderName="Ritika Sharma"
-        time="08:14 AM"
-        text="Good morning doctor, I felt a little dizzy after yesterday’s dialysis. It improved after breakfast."
-      />
-      <ChatBubble
-        direction="outgoing"
-        senderName="Dr. Mehta"
-        time="06:40 PM"
-        channel="Delivered through SMS"
-        text="Yes, continue it with dinner tonight. We’ll review the dose again after the next phosphorus report."
+      <SummaryCard
+        variant="agenda"
+        eyebrow="Today"
+        meta="Tue, 19 Jun"
+        count={24}
+        title="patients across 2 hospitals"
+        segments={[
+          { id: 'new',       label: 'New patients', value: 5,  icon: UserPlus },
+          { id: 'followup',  label: 'Follow-ups',   value: 14, icon: RotateCcw },
+          { id: 'urgent',    label: 'Urgent',       value: 3,  icon: TriangleAlert, tone: 'urgent' },
+          { id: 'procedure', label: 'Procedures',   value: 2,  icon: Activity },
+        ]}
+        footnote={{ icon: Clock, text: 'Next: Ward A rounds · 9:30 AM', accent: true }}
       />
     </div>
   ),
@@ -389,8 +440,17 @@ const componentPreviews: Record<string, React.ReactNode> = {
   ),
 
   MessageComposer: (
-    <div style={{ maxWidth: 420 }}>
-      <MessageComposer placeholder="Reply as Dr. Girish Sharma" />
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 420 }}>
+      <div>
+        <p style={{ fontSize: 11, fontWeight: 600, color: 'var(--charcoal-oslo)', marginBottom: 8 }}>variant="floating"</p>
+        <MessageComposer variant="floating" placeholder="Reply as Dr. Girish Sharma" />
+      </div>
+      <div>
+        <p style={{ fontSize: 11, fontWeight: 600, color: 'var(--charcoal-oslo)', marginBottom: 8 }}>variant="docked"</p>
+        <div style={{ border: '1px solid var(--neutral-stroke)', borderRadius: 12, overflow: 'hidden' }}>
+          <MessageComposer variant="docked" placeholder="Message" />
+        </div>
+      </div>
     </div>
   ),
 
@@ -405,27 +465,172 @@ const componentPreviews: Record<string, React.ReactNode> = {
   ),
 
   MessageBubble: (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxWidth: 420 }}>
-      <MessageBubble
-        direction="incoming"
-        senderName="Ritika Sharma"
-        text="Good morning doctor, I felt a little dizzy after yesterday’s dialysis."
-        time="08:14 AM"
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
+      {/* Classic — care thread V1: sender + time above, squared outer-top corner */}
+      <div style={{ flex: '1 1 300px' }}>
+        <p style={{ fontSize: 11, fontWeight: 600, color: 'var(--charcoal-oslo)', marginBottom: 8 }}>variant="classic"</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <MessageBubble
+            variant="classic"
+            direction="incoming"
+            senderName="Ritika Sharma"
+            time="08:14 AM"
+            text="Good morning doctor, I felt a little dizzy after yesterday’s dialysis. It improved after breakfast."
+          />
+          <MessageBubble
+            variant="classic"
+            direction="outgoing"
+            senderName="Dr. Mehta"
+            time="06:40 PM"
+            channel="Delivered through SMS"
+            text="Yes, continue it with dinner tonight. We’ll review the dose again after the next phosphorus report."
+          />
+        </div>
+      </div>
+
+      {/* WhatsApp — chat V2: tail, inline time + read ticks */}
+      <div style={{ flex: '1 1 300px' }}>
+        <p style={{ fontSize: 11, fontWeight: 600, color: 'var(--charcoal-oslo)', marginBottom: 8 }}>variant="whatsapp"</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <MessageBubble
+            variant="whatsapp"
+            direction="incoming"
+            senderName="Ritika Sharma"
+            text="Good morning doctor, I felt a little dizzy after yesterday’s dialysis."
+            time="08:14 AM"
+          />
+          <MessageBubble
+            variant="whatsapp"
+            direction="outgoing"
+            text="Thanks. Please check your BP now and again 30 minutes after standing."
+            time="08:32 AM"
+            status="read"
+          />
+        </div>
+      </div>
+    </div>
+  ),
+
+  EventCard: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 360 }}>
+      {/* Icon header, light — full medication inset + status */}
+      <EventCard
+        icon={Pill}
+        title="CKD medications started"
+        meta="Initial renal regimen · Dr. Mehta · Nephrology"
+        description="Torsemide and sodium bicarbonate started for volume control and metabolic acidosis management."
+      >
+        <MedicationInset
+          status="New start"
+          name="Torsemide + sodium bicarbonate"
+          detail="20 mg / 650 mg · Morning / Twice daily · Oral"
+        />
+      </EventCard>
+
+      {/* Icon header, light — no inset */}
+      <EventCard
+        icon={Pill}
+        title="CKD medications started"
+        meta="Initial renal regimen · Dr. Mehta · Nephrology"
+        description="Torsemide and sodium bicarbonate started for volume control and metabolic acidosis management."
       />
-      <MessageBubble
-        direction="outgoing"
-        text="Thanks. Please check your BP now and again 30 minutes after standing."
-        time="08:32 AM"
-        status="read"
+
+      {/* Collapsible, light — collapsed + expanded with inset */}
+      <EventCard
+        collapsible
+        title="CKD medications started"
+        description="Torsemide and sodium bicarbonate started for volume control and metabolic acidosis management."
+      >
+        <MedicationInset name="Torsemide + sodium bicarbonate" detail="20 mg / 650 mg · Morning / Twice daily · Oral" />
+      </EventCard>
+      <EventCard
+        collapsible
+        defaultExpanded
+        title="CKD medications started"
+        description="Torsemide and sodium bicarbonate started for volume control and metabolic acidosis management."
+      >
+        <MedicationInset name="Torsemide + sodium bicarbonate" detail="20 mg / 650 mg · Morning / Twice daily · Oral" />
+      </EventCard>
+
+      {/* Collapsible, dark — collapsed + expanded with inset */}
+      <EventCard
+        collapsible
+        theme="dark"
+        title="CKD medications started"
+        description="Torsemide and sodium bicarbonate started for volume control and metabolic acidosis management."
+      >
+        <MedicationInset theme="dark" name="Torsemide + sodium bicarbonate" detail="20 mg / 650 mg · Morning / Twice daily · Oral" />
+      </EventCard>
+      <EventCard
+        collapsible
+        defaultExpanded
+        theme="dark"
+        title="CKD medications started"
+        description="Torsemide and sodium bicarbonate started for volume control and metabolic acidosis management."
+      >
+        <MedicationInset theme="dark" name="Torsemide + sodium bicarbonate" detail="20 mg / 650 mg · Morning / Twice daily · Oral" />
+      </EventCard>
+
+      {/* Collapsible, light — appointment progress + next checkup footer */}
+      <EventCard
+        collapsible
+        defaultExpanded
+        title="CKD medications started"
+        description="Torsemide and sodium bicarbonate started for volume control and metabolic acidosis management."
+      >
+        <AppointmentProgress
+          steps={[
+            { label: 'Appointment Confirmed', time: '08:40AM' },
+            { label: 'Vitals Checked', time: '08:50AM' },
+            { label: 'Waiting in lobby', time: '08:55AM' },
+            { label: 'Consultation Started', time: '09:00AM' },
+            { label: 'Consultation Ended', time: '09:16AM' },
+          ]}
+        />
+        <NextCheckupRow date="12 June 2026" />
+      </EventCard>
+    </div>
+  ),
+
+  MedicationInset: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 320 }}>
+      <MedicationInset status="New start" name="Torsemide + sodium bicarbonate" detail="20 mg / 650 mg · Morning / Twice daily · Oral" />
+      <MedicationInset name="Torsemide + sodium bicarbonate" detail="20 mg / 650 mg · Morning / Twice daily · Oral" />
+      <div style={{ background: 'var(--charcoal-base)', borderRadius: 12, padding: 12 }}>
+        <MedicationInset theme="dark" name="Torsemide + sodium bicarbonate" detail="20 mg / 650 mg · Morning / Twice daily · Oral" />
+      </div>
+    </div>
+  ),
+
+  AppointmentProgress: (
+    <div style={{ maxWidth: 320 }}>
+      <AppointmentProgress
+        steps={[
+          { label: 'Appointment Confirmed', time: '08:40AM' },
+          { label: 'Vitals Checked', time: '08:50AM' },
+          { label: 'Waiting in lobby', time: '08:55AM' },
+          { label: 'Consultation Started', time: '09:00AM' },
+          { label: 'Consultation Ended', time: '09:16AM' },
+        ]}
       />
     </div>
   ),
 
-  ChatComposer: (
-    <div style={{ maxWidth: 420, border: '1px solid var(--neutral-stroke)', borderRadius: 12, overflow: 'hidden' }}>
-      <ChatComposer placeholder="Message" />
+  NextCheckupRow: (
+    <div style={{ maxWidth: 320 }}>
+      <NextCheckupRow date="12 June 2026" />
     </div>
   ),
+
+  DrawerOption: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 360, background: 'var(--neutral-app-bg)', padding: 12, borderRadius: 12 }}>
+      <DrawerOption icon={FileText} title="Add Notes" subtitle="Capture a progress note" />
+      <DrawerOption icon={LineChart} title="Add Reports" subtitle="Capture a new report" />
+      <DrawerOption icon={ClipboardList} title="Add Prescription" subtitle="Capture a prescription" />
+    </div>
+  ),
+
+  BottomDrawer: <BottomDrawerPreview />,
 }
 
 // ── Component ────────────────────────────────────────────────────────────
@@ -464,10 +669,10 @@ export function DesignSystemPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <img src={markSrc} alt="Jano" style={{ height: 28, width: 'auto', flexShrink: 0 }} />
           <div>
-            <span style={{ fontWeight: 700, fontSize: 15, color: 'var(--charcoal-base)', letterSpacing: -0.3 }}>
+            <span style={{ fontWeight: 700, fontSize: 16, color: 'var(--charcoal-base)', letterSpacing: -0.3 }}>
               Jano
             </span>
-            <span style={{ fontSize: 14, color: 'var(--charcoal-oslo)', marginLeft: 6 }}>
+            <span style={{ fontSize: 16, color: 'var(--charcoal-oslo)', marginLeft: 6 }}>
               Design System
             </span>
           </div>

@@ -19,6 +19,9 @@ function tabFromPath(pathname: string): BottomNavTab {
 
 // The screens that ship two layouts and the link that swaps between them.
 function versionToggle(pathname: string): { target: string; label: string } | null {
+  if (pathname === '/dashboard') return { target: '/dashboard-v2', label: 'Version 2' }
+  if (pathname === '/dashboard-v2') return { target: '/dashboard', label: 'Version 1' }
+
   if (pathname === '/patients') return { target: '/patients-v2', label: 'Version 2' }
   if (pathname === '/patients-v2') return { target: '/patients', label: 'Version 1' }
 
