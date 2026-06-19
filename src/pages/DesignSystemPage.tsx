@@ -11,13 +11,14 @@ import { FormField } from '@/components/molecules/FormField'
 import { DividerWithLabel } from '@/components/molecules/DividerWithLabel'
 import { SocialAuthButton } from '@/components/molecules/SocialAuthButton'
 import { FilterPill } from '@/components/molecules/FilterPill'
-import { FilterTabs } from '@/components/molecules/FilterTabs'
+import { FilterTabs } from '@/components/molecules/FilterPill'
 import { SearchBar } from '@/components/molecules/SearchBar'
 import { NavItem } from '@/components/molecules/NavItem'
 import { BottomNavigation, type BottomNavTab } from '@/components/organisms/BottomNavigation'
 import { ScreenHeader } from '@/components/organisms/ScreenHeader'
 import { PatientCard } from '@/components/organisms/PatientCard'
 import { MessageRow } from '@/components/organisms/MessageRow'
+import { AlertCard } from '@/components/organisms/AlertCard'
 
 // ── Nav structure ────────────────────────────────────────────────────────
 const NAV = [
@@ -245,6 +246,20 @@ const componentPreviews: Record<string, React.ReactNode> = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 420 }}>
       <MessageRow initials="RS" avatarColour="red" name="Ritika Sharma" time="09:10AM" preview="Starting the new physical therapy regimen this week." unreadCount={2} />
       <MessageRow initials="AM" avatarColour="grey" name="Arjun Mehta" time="Yesterday" preview="Can we reschedule tomorrow’s follow-up to the afternoon?" />
+    </div>
+  ),
+
+  AlertCard: (
+    <div style={{ maxWidth: 420 }}>
+      <AlertCard
+        eyebrow="Urgent lab alert"
+        title="High potassium: 5.3 mEq/L"
+        description="Latest pathology value is elevated and needs confirmation before prescription changes."
+        tag="Elevated 1 hr ago"
+        actionLabel="View trends"
+        index={1}
+        total={3}
+      />
     </div>
   ),
 }
@@ -677,8 +692,8 @@ export function DesignSystemPage() {
 
 // ── Sub-components ────────────────────────────────────────────────────────
 
-function NavLink({ id, label, active, onClick, indent = false }: {
-  id: string; label: string; active: boolean; onClick: () => void; indent?: boolean
+function NavLink({ label, active, onClick, indent = false }: {
+  id?: string; label: string; active: boolean; onClick: () => void; indent?: boolean
 }) {
   return (
     <button
