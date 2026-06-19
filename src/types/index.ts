@@ -113,6 +113,32 @@ export interface ChatThread {
   channel: ChatChannel
 }
 
+// ── Chat conversation (open thread) ──────────────────────────────────────────
+export type ChatMessageDirection = 'incoming' | 'outgoing'
+
+export interface ChatMessage {
+  id: string
+  senderName: string
+  direction: ChatMessageDirection
+  text: string
+  time: string             // display string, e.g. "08:14 AM"
+  channel?: string         // delivery note, e.g. "Delivered through SMS"
+}
+
+// A conversation renders as an ordered list of these items.
+export type ChatThreadItem =
+  | { kind: 'day'; label: string }
+  | { kind: 'note'; text: string }
+  | { kind: 'message'; message: ChatMessage }
+
+export interface ChatConversation {
+  id: string
+  patientName: string
+  mrn: string
+  participants: string[]
+  items: ChatThreadItem[]
+}
+
 // ── Lab Result ─────────────────────────────────────────────────────────────
 export type LabResultFlag = 'high' | 'low' | 'critical-high' | 'critical-low' | 'normal'
 

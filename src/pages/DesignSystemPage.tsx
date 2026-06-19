@@ -20,6 +20,11 @@ import { PatientCard } from '@/components/organisms/PatientCard'
 import { MessageRow } from '@/components/organisms/MessageRow'
 import { AlertCard } from '@/components/organisms/AlertCard'
 import { SummaryCard } from '@/components/organisms/SummaryCard'
+import { ChatBubble } from '@/components/molecules/ChatBubble'
+import { DayDivider } from '@/components/molecules/DayDivider'
+import { ThreadNote } from '@/components/molecules/ThreadNote'
+import { MessageComposer } from '@/components/organisms/MessageComposer'
+import { ChatThreadHeader } from '@/components/organisms/ChatThreadHeader'
 
 // ── Nav structure ────────────────────────────────────────────────────────
 const NAV = [
@@ -27,7 +32,7 @@ const NAV = [
   {
     id: 'colors', label: 'Colors', group: 'Colors',
     children: [
-      { id: 'colors-crimson',   label: 'Crimson — brand accent' },
+      { id: 'colors-crimson',   label: 'Crimson: brand accent' },
       { id: 'colors-charcoal',  label: 'Charcoal & ink' },
       { id: 'colors-neutrals',  label: 'Neutrals & surfaces' },
       { id: 'colors-status',    label: 'Status' },
@@ -36,8 +41,8 @@ const NAV = [
   {
     id: 'type', label: 'Typography', group: 'Typography',
     children: [
-      { id: 'type-body',    label: 'Figtree — body & labels' },
-      { id: 'type-display', label: 'Figtree — display & titles' },
+      { id: 'type-body',    label: 'Figtree: body & labels' },
+      { id: 'type-display', label: 'Figtree: display & titles' },
     ],
   },
   {
@@ -57,7 +62,7 @@ const NAV = [
   {
     id: 'icons', label: 'Iconography', group: 'Iconography',
     children: [
-      { id: 'icons-library',   label: 'Lucide — icon library' },
+      { id: 'icons-library',   label: 'Lucide: icon library' },
     ],
   },
   {
@@ -98,7 +103,7 @@ function GooglePreviewIcon() {
   )
 }
 
-// Stateful previews — components that need their own interactive state.
+// Stateful previews: components that need their own interactive state.
 function FilterTabsPreview() {
   const [active, setActive] = useState('all')
   return (
@@ -265,7 +270,7 @@ const componentPreviews: Record<string, React.ReactNode> = {
         <strong style={{ color: 'var(--charcoal-base)', fontWeight: 600 }}>One card, no variants.</strong>{' '}
         The Figma frame shows three stacked layers in descending shades
         (<code>--charcoal-base</code> → <code>--charcoal-warm</code> → <code>--charcoal-50</code>),
-        each slightly smaller — that is a purely decorative depth cue for a pile of alerts, not three
+        each slightly smaller, a purely decorative depth cue for a pile of alerts, not three
         component states. This card always uses the front layer (<code>--charcoal-base</code>); the{' '}
         <code>index</code>/<code>total</code> props drive the “1 / 3” counter. A literal stacked deck
         is a page-level wrapper, not a card variant.
@@ -297,6 +302,51 @@ const componentPreviews: Record<string, React.ReactNode> = {
           { label: 'Post', value: 1 },
           { label: 'Completed', value: 4 },
         ]}
+      />
+    </div>
+  ),
+
+  ChatBubble: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 420 }}>
+      <ChatBubble
+        direction="incoming"
+        senderName="Ritika Sharma"
+        time="08:14 AM"
+        text="Good morning doctor, I felt a little dizzy after yesterday’s dialysis. It improved after breakfast."
+      />
+      <ChatBubble
+        direction="outgoing"
+        senderName="Dr. Mehta"
+        time="06:40 PM"
+        channel="Delivered through SMS"
+        text="Yes, continue it with dinner tonight. We’ll review the dose again after the next phosphorus report."
+      />
+    </div>
+  ),
+
+  DayDivider: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <DayDivider label="Yesterday" />
+      <DayDivider label="Today" />
+    </div>
+  ),
+
+  ThreadNote: (
+    <ThreadNote>Patient messages from WhatsApp, SMS, and app are merged into one care thread.</ThreadNote>
+  ),
+
+  MessageComposer: (
+    <div style={{ maxWidth: 420 }}>
+      <MessageComposer placeholder="Reply as Dr. Mehta" />
+    </div>
+  ),
+
+  ChatThreadHeader: (
+    <div style={{ maxWidth: 393, border: '1px solid var(--neutral-stroke)', borderRadius: 12, overflow: 'hidden' }}>
+      <ChatThreadHeader
+        title="Ritika Sharma"
+        subtitle="MRN UGI56778"
+        participants={['Dr. Mehta', 'Asha', 'Nurse Priya']}
       />
     </div>
   ),
@@ -415,7 +465,7 @@ export function DesignSystemPage() {
           <div style={{ maxWidth: 760 }}>
 
             {/* Overview */}
-            <Section id="overview" eyebrow="Documentation" title="Design System" description="The single source of truth for the Jano visual language — colours, typography, spacing, and every component built for the Doctor Companion prototype." />
+            <Section id="overview" eyebrow="Documentation" title="Design System" description="The single source of truth for the Jano visual language: colours, typography, spacing, and every component built for the Doctor Companion prototype." />
 
             {/* Colors */}
             <Divider label="Colors" />
@@ -455,36 +505,36 @@ export function DesignSystemPage() {
 
             <div id="type-body" style={{ marginBottom: 48, scrollMarginTop: 24 }}>
               <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--charcoal-base)', marginBottom: 4 }}>
-                Figtree — body & labels
+                Figtree: body & labels
               </h2>
               <p style={{ fontSize: 14, color: 'var(--charcoal-oslo)', marginBottom: 24 }}>
                 Used for all body copy, captions, labels, and UI text.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 {[
-                  { cls: 'type-body-m',      label: 'Body M — 16px Regular',    sample: 'Patient admitted with acute chest pain, vitals stable.' },
-                  { cls: 'type-body-text-m', label: 'Body Text M — 14px Regular', sample: 'Progress note: patient responding well to beta-blocker therapy.' },
-                  { cls: 'type-body-s',      label: 'Body S — 14px Semibold',   sample: 'Ward 3B · Bed 12' },
-                  { cls: 'type-body-xs',     label: 'Body XS — 12px Regular',   sample: 'Last updated 08:42 AM' },
-                  { cls: 'type-overline-xs', label: 'Overline XS — 12px Medium', sample: 'PATIENT DETAILS' },
+                  { cls: 'type-body-m',      label: 'Body M · 16px Regular',    sample: 'Patient admitted with acute chest pain, vitals stable.' },
+                  { cls: 'type-body-text-m', label: 'Body Text M · 14px Regular', sample: 'Progress note: patient responding well to beta-blocker therapy.' },
+                  { cls: 'type-body-s',      label: 'Body S · 14px Semibold',   sample: 'Ward 3B · Bed 12' },
+                  { cls: 'type-body-xs',     label: 'Body XS · 12px Regular',   sample: 'Last updated 08:42 AM' },
+                  { cls: 'type-overline-xs', label: 'Overline XS · 12px Medium', sample: 'PATIENT DETAILS' },
                 ].map(t => <TypeRow key={t.cls} {...t} />)}
               </div>
             </div>
 
             <div id="type-display" style={{ marginBottom: 48, scrollMarginTop: 24 }}>
               <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--charcoal-base)', marginBottom: 4 }}>
-                Figtree — display & titles
+                Figtree: display & titles
               </h2>
               <p style={{ fontSize: 14, color: 'var(--charcoal-oslo)', marginBottom: 24 }}>
                 Used for screen headers, card titles, and key data points.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 {[
-                  { cls: 'type-title-xl', label: 'Title XL — 20px Medium',   sample: 'Good morning, Dr. Sharma' },
-                  { cls: 'type-title-l',  label: 'Title L — 18px Semibold',  sample: 'Patient Overview' },
-                  { cls: 'type-title-m',  label: 'Title M — 16px Semibold',  sample: 'Current Medications' },
-                  { cls: 'type-title-s',  label: 'Title S — 14px Semibold',  sample: 'Ritika Sharma' },
-                  { cls: 'type-title-xs', label: 'Title XS — 12px Medium',   sample: 'MRN 00291847' },
+                  { cls: 'type-title-xl', label: 'Title XL · 20px Medium',   sample: 'Good morning, Dr. Sharma' },
+                  { cls: 'type-title-l',  label: 'Title L · 18px Semibold',  sample: 'Patient Overview' },
+                  { cls: 'type-title-m',  label: 'Title M · 16px Semibold',  sample: 'Current Medications' },
+                  { cls: 'type-title-s',  label: 'Title S · 14px Semibold',  sample: 'Ritika Sharma' },
+                  { cls: 'type-title-xs', label: 'Title XS · 12px Medium',   sample: 'MRN 00291847' },
                 ].map(t => <TypeRow key={t.cls} {...t} />)}
               </div>
             </div>
@@ -504,7 +554,7 @@ export function DesignSystemPage() {
                 borderRadius: 10, padding: '10px 16px', marginBottom: 24, fontSize: 13,
                 color: 'var(--crimson-deep)', fontWeight: 600,
               }}>
-                Strict rule — arbitrary px values are forbidden in components.
+                Strict rule: arbitrary px values are forbidden in components.
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {[
@@ -656,7 +706,7 @@ export function DesignSystemPage() {
 
             <div id="icons-library" style={{ marginBottom: 48, scrollMarginTop: 24 }}>
               <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--charcoal-base)', marginBottom: 4 }}>
-                Lucide — icon library
+                Lucide: icon library
               </h2>
               <p style={{ fontSize: 14, color: 'var(--charcoal-oslo)', lineHeight: 1.6, marginBottom: 24 }}>
                 All icons in Jano use <strong style={{ color: 'var(--charcoal-base)' }}>Lucide</strong> via the <code style={{ fontSize: 12, background: 'var(--neutral-sunken)', padding: '2px 6px', borderRadius: 4 }}>lucide-react</code> package.
@@ -676,7 +726,7 @@ export function DesignSystemPage() {
                 {[
                   { label: 'Size', rule: '20px nav/action · 16px inline/label · 24px empty state' },
                   { label: 'Stroke', rule: '1.5 default · 2.0 for emphasis only' },
-                  { label: 'Colour', rule: 'Inherit from parent — never hardcode on the icon' },
+                  { label: 'Colour', rule: 'Inherit from parent, never hardcode on the icon' },
                 ].map(r => (
                   <div key={r.label} style={{ background: 'var(--neutral-sunken)', borderRadius: 10, padding: '14px 16px' }}>
                     <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.6, color: 'var(--crimson-base)', marginBottom: 4 }}>{r.label}</p>
@@ -697,7 +747,7 @@ export function DesignSystemPage() {
                     {section.label}
                   </h2>
                   <p style={{ fontSize: 14, color: 'var(--charcoal-oslo)', marginBottom: 24 }}>
-                    {section.label === 'Atoms'     && 'Primitive building blocks — not further decomposable.'}
+                    {section.label === 'Atoms'     && 'Primitive building blocks, not further decomposable.'}
                     {section.label === 'Molecules'  && 'Groups of atoms that form simple, functional UI units.'}
                     {section.label === 'Organisms'  && 'Complex UI sections composed of molecules and atoms.'}
                   </p>
@@ -831,7 +881,7 @@ function ComponentRow({ comp, preview }: { comp: ComponentDoc; preview?: React.R
         </span>
       </div>
 
-      {/* Live preview — only for built components that have a preview */}
+      {/* Live preview, only for built components that have a preview */}
       {preview && comp.status === 'built' && (
         <>
           <div style={{ height: 1, background: 'var(--neutral-warm-grey)', margin: '0 16px' }} />

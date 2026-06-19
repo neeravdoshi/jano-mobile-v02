@@ -10,12 +10,12 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
         name: 'Jano - Doctor Companion',
         short_name: 'Jano',
         description: 'Healthcare companion for doctors to track patients, medications, and daily workflow',
-        theme_color: '#0F4C75',
+        theme_color: '#E54B4B',
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait',

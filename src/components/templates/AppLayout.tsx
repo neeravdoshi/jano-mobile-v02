@@ -1,4 +1,5 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
+import { Sparkles } from 'lucide-react'
 import { MobileShell } from './MobileShell'
 import { BottomNavigation, type BottomNavTab } from '@/components/organisms'
 
@@ -19,6 +20,12 @@ function tabFromPath(pathname: string): BottomNavTab {
 export function AppLayout() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
+
+  // Version toggle (desktop affordance) — only on the patients screens.
+  const onPatients = pathname === '/patients' || pathname === '/patients-v2'
+  const isV2 = pathname === '/patients-v2'
+  const versionTarget = isV2 ? '/patients' : '/patients-v2'
+  const versionLabel = isV2 ? 'Version 1' : 'Version 2'
 
   // The login screen ('/') sits inside the shell but shows no bottom nav.
   const showNav = pathname !== '/'
@@ -93,6 +100,49 @@ export function AppLayout() {
               Design System
             </span>
           </Link>
+
+          {/* Version toggle — appears only on the patients screen */}
+          {onPatients && (
+            <Link
+              to={versionTarget}
+              style={{
+                position: 'absolute',
+                top: 54,
+                left: '100%',
+                marginLeft: 20,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 9,
+                padding: '12px 20px',
+                borderRadius: 28,
+                background: 'var(--neutral-card)',
+                border: '1px solid var(--crimson-30)',
+                boxShadow: '0 2px 8px rgba(229,75,75,0.10)',
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+                transition: 'box-shadow 0.15s, border-color 0.15s',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.borderColor = 'var(--crimson-base)'
+                ;(e.currentTarget as HTMLElement).style.boxShadow = '0 2px 12px rgba(229,75,75,0.18)'
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.borderColor = 'var(--crimson-30)'
+                ;(e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(229,75,75,0.10)'
+              }}
+            >
+              <Sparkles size={18} strokeWidth={1.5} style={{ color: 'var(--crimson-base)' }} />
+              <span style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 14,
+                fontWeight: 600,
+                color: 'var(--crimson-deep)',
+                letterSpacing: -0.1,
+              }}>
+                {versionLabel}
+              </span>
+            </Link>
+          )}
         </div>
       </div>
 

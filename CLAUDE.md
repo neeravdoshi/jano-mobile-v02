@@ -387,6 +387,7 @@ npx tsc --noEmit # type-check only
 - [x] MessageRow organism (chat list row — read + unread variants)
 - [x] Chat page (`/chat`) — header + search + filter tabs + white-card message list; live filter + name search
 - [x] AlertCard organism (critical alert spotlight — dark card, crimson eyebrow + counter, status tag + ghost action)
+- [x] Open chat conversation (`/chat/:id`) — ChatThreadHeader + day dividers + bubbles + thread note + floating MessageComposer (transcript scrolls behind it)
 - [ ] Remaining atoms: Icon
 - [ ] Any organisms: NoteCard
 - [ ] Framer Motion page transitions (deliberately deferred)
@@ -417,3 +418,6 @@ npx tsc --noEmit # type-check only
 | 2026-06-19 | Added live previews for all built components to `/design-system` (Badge, Avatar, FilterPill, FilterTabs, SearchBar, NavItem, BottomNavigation, ScreenHeader, PatientCard, MessageRow); made design-system documentation a strict rule — every component must register + add a `componentPreviews` entry |
 | 2026-06-19 | Built AlertCard organism (Figma 155-3302) — critical alert spotlight: charcoal-base card, crimson-30/25% border, crimson eyebrow + "1 / 3" counter, white title, warm-white body, crimson status tag + ghost action; live preview in DS |
 | 2026-06-19 | Built SummaryCard organism (Figma 181-7113 collapsed / 182-6514 expanded) — collapsible charcoal banner: count + title + chevron toggle, expands to a crimson-20/10% panel of label/value rows with hairline dividers; collapsed + expanded previews in DS |
+| 2026-06-19 | Added distilled Patients list via /distill — same content, but the 8 bordered cards collapse into one white surface with hairline-divided rows (badge inline beside name, map-pin dropped, `--space-8` between name & meta lines); /clarify copy (sentence-case search placeholder, actionable empty state). Crimson "Version" toggle pill in AppLayout, desktop-only, shown only on the patients screens |
+| 2026-06-19 | Made the distilled list the **default** patients screen = "Version 1" (`/patients` → `PatientsV2Page`); classic boxed cards demoted to "Version 2" (`/patients-v2` → `PatientsPage`). Note the file names are now inverted vs the labels — route comments document the mapping |
+| 2026-06-19 | Built open chat conversation `/chat/:id` (Figma 206-7780, adapted to the preferred older look). Molecules: ChatBubble (incoming/outgoing, squared outer-top corner, white vs crimson-5 tint), DayDivider, ThreadNote. Organisms: MessageComposer (floating: attach/input/voice/crimson-send), ChatThreadHeader (back, name+MRN, expand, care-thread participants). Composer floats absolutely; transcript scrolls behind it (bottom padding clears it). Added ChatMessage/ChatConversation types + `careConversation` mock; ChatPage rows now navigate into the thread. DS previews + registry for all 5 new components |

@@ -48,13 +48,16 @@ export function MessageRow({
           <span className="type-title-s truncate" style={{ color: 'var(--color-text-primary)' }}>
             {name}
           </span>
-          <span className="type-body-xs shrink-0" style={{ color: 'var(--charcoal-oslo)' }}>
+          <span className="type-body-text-m shrink-0" style={{ color: 'var(--charcoal-oslo)' }}>
             {time}
           </span>
         </div>
 
         <div className="flex items-center" style={{ gap: 'var(--space-4)' }}>
-          <span className="type-body-xs min-w-0 flex-1 truncate" style={{ color: 'var(--charcoal-oslo)' }}>
+          <span
+            className={`${hasUnread ? 'type-body-s' : 'type-body-text-m'} min-w-0 flex-1 truncate`}
+            style={{ color: hasUnread ? 'var(--charcoal-50)' : 'var(--charcoal-oslo)' }}
+          >
             {preview}
           </span>
           {hasUnread && (

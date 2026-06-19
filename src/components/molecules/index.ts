@@ -16,3 +16,12 @@ export type { SearchBarProps } from './SearchBar'
 export { NavItem } from './NavItem'
 export type { NavItemProps } from './NavItem'
 
+export { ChatBubble } from './ChatBubble'
+export type { ChatBubbleProps } from './ChatBubble'
+
+export { DayDivider } from './DayDivider'
+export type { DayDividerProps } from './DayDivider'
+
+export { ThreadNote } from './ThreadNote'
+export type { ThreadNoteProps } from './ThreadNote'
+

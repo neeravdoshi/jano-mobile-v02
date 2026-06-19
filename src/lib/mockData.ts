@@ -1,4 +1,4 @@
-import type { ChatThread, Doctor, Patient } from '@/types'
+import type { ChatConversation, ChatThread, Doctor, Patient } from '@/types'
 
 export const currentDoctor: Doctor = {
   id: 'doc-1',
@@ -34,6 +34,64 @@ export const chatThreads: ChatThread[] = [
   { id: 'c-7', name: 'Rohan Gupta',      initials: 'RG', avatarColour: 'yellow',                                                                 channel: 'patient', time: 'Mon',                       preview: 'Is this medication safe to take with my allergy?' },
   { id: 'c-8', name: 'Dr. Aditya Verma', initials: 'AV', avatarColour: 'blue',   avatarUrl: 'https://randomuser.me/api/portraits/men/64.jpg',   channel: 'team',    time: 'Sun',       unreadCount: 3, preview: 'Lab flagged a critical potassium value -- please check.' },
 ]
+
+// Open care-thread conversation (what opens when a chat row is tapped).
+// Patient (Ritika) is incoming/left; the responding doctor (Dr. Mehta) is outgoing/right.
+export const careConversation: ChatConversation = {
+  id: 'c-1',
+  patientName: 'Ritika Sharma',
+  mrn: 'UGI56778',
+  participants: ['Dr. Mehta', 'Asha', 'Nurse Priya'],
+  items: [
+    { kind: 'day', label: 'Yesterday' },
+    {
+      kind: 'message',
+      message: {
+        id: 'm-1', senderName: 'Ritika Sharma', direction: 'incoming', time: '06:22 PM',
+        text: 'Also wanted to ask if I should continue the phosphate binder with dinner today.',
+      },
+    },
+    {
+      kind: 'message',
+      message: {
+        id: 'm-2', senderName: 'Dr. Mehta', direction: 'outgoing', time: '06:40 PM',
+        channel: 'Delivered through SMS',
+        text: 'Yes, continue it with dinner tonight. We’ll review the dose again after the next phosphorus report.',
+      },
+    },
+    { kind: 'day', label: 'Today' },
+    { kind: 'note', text: 'Patient messages from WhatsApp, SMS, and app are merged into one care thread.' },
+    {
+      kind: 'message',
+      message: {
+        id: 'm-3', senderName: 'Ritika Sharma', direction: 'incoming', time: '08:14 AM',
+        text: 'Good morning doctor, I felt a little dizzy after yesterday’s dialysis. It improved after breakfast.',
+      },
+    },
+    {
+      kind: 'message',
+      message: {
+        id: 'm-4', senderName: 'Asha', direction: 'incoming', time: '08:19 AM',
+        text: 'Noted on behalf of Dr. Mehta. Please share current BP if available.',
+      },
+    },
+    {
+      kind: 'message',
+      message: {
+        id: 'm-5', senderName: 'Dr. Mehta', direction: 'outgoing', time: '08:32 AM',
+        text: 'Thanks Asha. Ritika, please check your BP now and again 30 minutes after standing.',
+      },
+    },
+  ],
+}
+
+// Prototype: every thread opens the same care conversation, but the header reflects
+// the tapped row's name where we have it.
+export function getConversation(threadId: string): ChatConversation {
+  const thread = chatThreads.find(t => t.id === threadId)
+  if (!thread || thread.id === careConversation.id) return careConversation
+  return { ...careConversation, id: thread.id, patientName: thread.name }
+}
 
 function mk(id: string, name: string, encounterType: Patient['encounterType']): Patient {
   return {

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ScreenHeader, MessageRow } from '@/components/organisms'
 import { SearchBar, FilterTabs, type FilterTabOption } from '@/components/molecules'
 import { currentDoctor, chatThreads } from '@/lib/mockData'
@@ -7,6 +8,7 @@ import type { ChatChannel } from '@/types'
 type Filter = 'all' | ChatChannel
 
 export function ChatPage() {
+  const navigate = useNavigate()
   const [filter, setFilter] = useState<Filter>('all')
   const [query, setQuery] = useState('')
 
@@ -59,7 +61,7 @@ export function ChatPage() {
             time={t.time}
             preview={t.preview}
             unreadCount={t.unreadCount}
-            onClick={() => {}}
+            onClick={() => navigate(`/chat/${t.id}`)}
           />
         ))}
 

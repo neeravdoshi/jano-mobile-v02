@@ -19,40 +19,44 @@ export interface RegistrySection {
   components: ComponentDoc[]
 }
 
-// ── Registry — updated as components are built ────────────────────────────
+// ── Registry, updated as components are built ─────────────────────────────
 export const componentRegistry: RegistrySection[] = [
   {
     label: 'Atoms',
     components: [
-      { name: 'Icon', description: 'Lucide icon (lucide-react). Use named imports only — never inline SVGs or other libraries.', atomicLevel: 'atom', status: 'planned' },
-      { name: 'Badge', description: 'Label badge — 6 colour variants, full-pill, 10px uppercase', atomicLevel: 'atom', status: 'built', path: 'components/atoms/Badge.tsx', variants: [{ name: 'yellow' }, { name: 'green' }, { name: 'grey' }, { name: 'blue' }, { name: 'red' }, { name: 'black' }] },
+      { name: 'Badge', description: 'Label badge: 6 colour variants, full-pill, 10px uppercase', atomicLevel: 'atom', status: 'built', path: 'components/atoms/Badge.tsx', variants: [{ name: 'yellow' }, { name: 'green' }, { name: 'grey' }, { name: 'blue' }, { name: 'red' }, { name: 'black' }] },
       { name: 'Button', description: 'Primary, outline, ghost and destructive actions', atomicLevel: 'atom', status: 'built', path: 'components/atoms/Button.tsx', variants: [{ name: 'primary' }, { name: 'outline' }, { name: 'ghost' }, { name: 'destructive' }] },
       { name: 'Input', description: 'Bare text input with error state', atomicLevel: 'atom', status: 'built', path: 'components/atoms/Input.tsx', variants: [{ name: 'default' }, { name: 'error' }] },
-      { name: 'Avatar', description: 'Circular initials avatar — colour variants share the Badge tokens', atomicLevel: 'atom', status: 'built', path: 'components/atoms/Avatar.tsx', variants: [{ name: 'grey' }, { name: 'red' }, { name: 'green' }, { name: 'blue' }, { name: 'yellow' }] },
+      { name: 'Avatar', description: 'Circular initials avatar: colour variants share the Badge tokens', atomicLevel: 'atom', status: 'built', path: 'components/atoms/Avatar.tsx', variants: [{ name: 'grey' }, { name: 'red' }, { name: 'green' }, { name: 'blue' }, { name: 'yellow' }] },
     ],
   },
   {
     label: 'Molecules',
     components: [
-      { name: 'SearchBar', description: 'Pill search field — with or without trailing filter button', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/SearchBar.tsx', variants: [{ name: 'default' }, { name: 'with-filter' }] },
-      { name: 'FormField', description: 'Label + Input + error/hint — spreads all input props', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/FormField.tsx' },
+      { name: 'SearchBar', description: 'Pill search field, with or without a trailing filter button', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/SearchBar.tsx', variants: [{ name: 'default' }, { name: 'with-filter' }] },
+      { name: 'FormField', description: 'Label + Input + error/hint, spreads all input props', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/FormField.tsx' },
       { name: 'DividerWithLabel', description: 'Horizontal rule with centered text label (e.g. OR)', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/DividerWithLabel.tsx' },
       { name: 'SocialAuthButton', description: 'Outline button with icon + label for OAuth providers', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/SocialAuthButton.tsx' },
-      { name: 'FilterPill', description: 'Filter chip — selected/unselected × with/without count', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/FilterPill.tsx', variants: [{ name: 'selected' }, { name: 'unselected' }, { name: 'selected+count' }, { name: 'unselected+count' }] },
+      { name: 'FilterPill', description: 'Filter chip: selected/unselected, with/without count', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/FilterPill.tsx', variants: [{ name: 'selected' }, { name: 'unselected' }, { name: 'selected+count' }, { name: 'unselected+count' }] },
       { name: 'FilterTabs', description: 'Horizontal scrollable row of FilterPills with active state', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/FilterTabs.tsx' },
-      { name: 'NavItem', description: 'Single bottom-nav item — icon + label, active/inactive', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/NavItem.tsx', variants: [{ name: 'active' }, { name: 'inactive' }] },
+      { name: 'NavItem', description: 'Single bottom-nav item: icon + label, active/inactive', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/NavItem.tsx', variants: [{ name: 'active' }, { name: 'inactive' }] },
+      { name: 'ChatBubble', description: 'Conversation message: sender + time, bubble (squared outer-top corner); incoming + outgoing', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/ChatBubble.tsx', variants: [{ name: 'incoming' }, { name: 'outgoing' }] },
+      { name: 'DayDivider', description: 'Centered uppercase day pill (Yesterday / Today) for a transcript', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/DayDivider.tsx' },
+      { name: 'ThreadNote', description: 'Centered muted system note inside a conversation', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/ThreadNote.tsx' },
     ],
   },
   {
     label: 'Organisms',
     components: [
-      { name: 'BottomNavigation', description: 'Bottom tab bar — Home, Patients, Schedule, Chat + center quick action', atomicLevel: 'organism', status: 'built', path: 'components/organisms/BottomNavigation.tsx', variants: [{ name: 'home' }, { name: 'patients' }, { name: 'schedule' }, { name: 'chat' }] },
-      { name: 'ScreenHeader', description: 'App header — 4 variants: Default, No Arrow, Doctor, Chat', atomicLevel: 'organism', status: 'built', path: 'components/organisms/ScreenHeader.tsx', variants: [{ name: 'default' }, { name: 'no-arrow' }, { name: 'doctor' }, { name: 'chat' }] },
-      { name: 'PatientCard', description: 'Patient list card — name, encounter badge, ward/bed/MRN; default + highlighted', atomicLevel: 'organism', status: 'built', path: 'components/organisms/PatientCard.tsx', variants: [{ name: 'default' }, { name: 'highlighted' }] },
-      { name: 'MessageRow', description: 'Chat list row — avatar, name, time, preview; optional unread count badge', atomicLevel: 'organism', status: 'built', path: 'components/organisms/MessageRow.tsx', variants: [{ name: 'read' }, { name: 'unread' }] },
+      { name: 'BottomNavigation', description: 'Bottom tab bar: Home, Patients, Schedule, Chat + center quick action', atomicLevel: 'organism', status: 'built', path: 'components/organisms/BottomNavigation.tsx', variants: [{ name: 'home' }, { name: 'patients' }, { name: 'schedule' }, { name: 'chat' }] },
+      { name: 'ScreenHeader', description: 'App header with 4 variants: Default, No Arrow, Doctor, Chat', atomicLevel: 'organism', status: 'built', path: 'components/organisms/ScreenHeader.tsx', variants: [{ name: 'default' }, { name: 'no-arrow' }, { name: 'doctor' }, { name: 'chat' }] },
+      { name: 'PatientCard', description: 'Patient list card: name, encounter badge, ward/bed/MRN; default + highlighted', atomicLevel: 'organism', status: 'built', path: 'components/organisms/PatientCard.tsx', variants: [{ name: 'default' }, { name: 'highlighted' }] },
+      { name: 'MessageRow', description: 'Chat list row: avatar, name, time, preview; optional unread count badge', atomicLevel: 'organism', status: 'built', path: 'components/organisms/MessageRow.tsx', variants: [{ name: 'read' }, { name: 'unread' }] },
       { name: 'NoteCard', description: 'Clinical progress note card', atomicLevel: 'organism', status: 'planned' },
-      { name: 'AlertCard', description: 'Critical alert spotlight — dark card, crimson eyebrow + counter, status tag + ghost action', atomicLevel: 'organism', status: 'built', path: 'components/organisms/AlertCard.tsx' },
-      { name: 'SummaryCard', description: 'Collapsible dark summary banner — count + title, expands to a label/value breakdown', atomicLevel: 'organism', status: 'built', path: 'components/organisms/SummaryCard.tsx', variants: [{ name: 'collapsed' }, { name: 'expanded' }] },
+      { name: 'AlertCard', description: 'Critical alert spotlight: dark card, crimson eyebrow + counter, status tag + ghost action', atomicLevel: 'organism', status: 'built', path: 'components/organisms/AlertCard.tsx' },
+      { name: 'SummaryCard', description: 'Collapsible dark summary banner: count + title, expands to a label/value breakdown', atomicLevel: 'organism', status: 'built', path: 'components/organisms/SummaryCard.tsx', variants: [{ name: 'collapsed' }, { name: 'expanded' }] },
+      { name: 'MessageComposer', description: 'Floating chat composer: attach + text input + voice + crimson send', atomicLevel: 'organism', status: 'built', path: 'components/organisms/MessageComposer.tsx' },
+      { name: 'ChatThreadHeader', description: 'Open-chat header: back, patient name + MRN, expand action, care-thread participants', atomicLevel: 'organism', status: 'built', path: 'components/organisms/ChatThreadHeader.tsx' },
     ],
   },
 ]
@@ -60,7 +64,7 @@ export const componentRegistry: RegistrySection[] = [
 // ── Design token groups (for the docs colour swatches) ───────────────────
 export const colorGroups = [
   {
-    label: 'Crimson — brand accent',
+    label: 'Crimson: brand accent',
     description: 'Primary actions, links, FAB, urgent',
     swatches: [
       { name: '5',     hex: '#FCF8F8', dark: false },

@@ -63,12 +63,12 @@ export function PatientCard({
 
         <div className="flex items-center" style={{ gap: 'var(--space-4)' }}>
           <MapPin
-            size={12}
+            size={14}
             strokeWidth={1.5}
             style={{ color: highlighted ? 'var(--neutral-app-bg)' : 'var(--charcoal-oslo)', flexShrink: 0 }}
           />
           <span
-            className="type-body-xs truncate"
+            className="type-body-text-m truncate"
             style={{ color: highlighted ? 'var(--neutral-app-bg)' : 'var(--charcoal-oslo)' }}
           >
             {meta}
