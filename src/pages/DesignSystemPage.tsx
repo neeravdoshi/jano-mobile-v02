@@ -10,8 +10,7 @@ import { Avatar } from '@/components/atoms/Avatar'
 import { FormField } from '@/components/molecules/FormField'
 import { DividerWithLabel } from '@/components/molecules/DividerWithLabel'
 import { SocialAuthButton } from '@/components/molecules/SocialAuthButton'
-import { FilterPill } from '@/components/molecules/FilterPill'
-import { FilterTabs } from '@/components/molecules/FilterPill'
+import { FilterPill, FilterTabs } from '@/components/molecules/FilterPill'
 import { SearchBar } from '@/components/molecules/SearchBar'
 import { NavItem } from '@/components/molecules/NavItem'
 import { BottomNavigation, type BottomNavTab } from '@/components/organisms/BottomNavigation'
@@ -19,6 +18,7 @@ import { ScreenHeader } from '@/components/organisms/ScreenHeader'
 import { PatientCard } from '@/components/organisms/PatientCard'
 import { MessageRow } from '@/components/organisms/MessageRow'
 import { AlertCard } from '@/components/organisms/AlertCard'
+import { SummaryCard } from '@/components/organisms/SummaryCard'
 
 // ── Nav structure ────────────────────────────────────────────────────────
 const NAV = [
@@ -259,6 +259,34 @@ const componentPreviews: Record<string, React.ReactNode> = {
         actionLabel="View trends"
         index={1}
         total={3}
+      />
+    </div>
+  ),
+
+  SummaryCard: (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 360 }}>
+      <SummaryCard
+        count={18}
+        title="Dialysis appointments scheduled today"
+        items={[
+          { label: 'Queue', value: 5 },
+          { label: 'Pre-Session', value: 2 },
+          { label: 'Monitoring', value: 6 },
+          { label: 'Post', value: 1 },
+          { label: 'Completed', value: 4 },
+        ]}
+      />
+      <SummaryCard
+        defaultExpanded
+        count={18}
+        title="Dialysis appointments scheduled today"
+        items={[
+          { label: 'Queue', value: 5 },
+          { label: 'Pre-Session', value: 2 },
+          { label: 'Monitoring', value: 6 },
+          { label: 'Post', value: 1 },
+          { label: 'Completed', value: 4 },
+        ]}
       />
     </div>
   ),

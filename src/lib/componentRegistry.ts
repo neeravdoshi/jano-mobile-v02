@@ -51,7 +51,8 @@ export const componentRegistry: RegistrySection[] = [
       { name: 'PatientCard', description: 'Patient list card — name, encounter badge, ward/bed/MRN; default + highlighted', atomicLevel: 'organism', status: 'built', path: 'components/organisms/PatientCard.tsx', variants: [{ name: 'default' }, { name: 'highlighted' }] },
       { name: 'MessageRow', description: 'Chat list row — avatar, name, time, preview; optional unread count badge', atomicLevel: 'organism', status: 'built', path: 'components/organisms/MessageRow.tsx', variants: [{ name: 'read' }, { name: 'unread' }] },
       { name: 'NoteCard', description: 'Clinical progress note card', atomicLevel: 'organism', status: 'planned' },
-      { name: 'AlertCard', description: 'Feedback alert — info, warning, critical', atomicLevel: 'organism', status: 'planned' },
+      { name: 'AlertCard', description: 'Critical alert spotlight — dark card, crimson eyebrow + counter, status tag + ghost action', atomicLevel: 'organism', status: 'built', path: 'components/organisms/AlertCard.tsx' },
+      { name: 'SummaryCard', description: 'Collapsible dark summary banner — count + title, expands to a label/value breakdown', atomicLevel: 'organism', status: 'built', path: 'components/organisms/SummaryCard.tsx', variants: [{ name: 'collapsed' }, { name: 'expanded' }] },
     ],
   },
 ]

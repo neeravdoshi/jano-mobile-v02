@@ -9,3 +9,9 @@ export type { PatientCardProps, PatientCardVariant } from './PatientCard'
 
 export { MessageRow } from './MessageRow'
 export type { MessageRowProps } from './MessageRow'
+
+export { AlertCard } from './AlertCard'
+export type { AlertCardProps } from './AlertCard'
+
+export { SummaryCard } from './SummaryCard'
+export type { SummaryCardProps, SummaryItem } from './SummaryCard'

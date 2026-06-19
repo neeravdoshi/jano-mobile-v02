@@ -386,8 +386,9 @@ npx tsc --noEmit # type-check only
 - [x] Avatar atom (circular initials, colour variants sharing Badge tokens)
 - [x] MessageRow organism (chat list row — read + unread variants)
 - [x] Chat page (`/chat`) — header + search + filter tabs + white-card message list; live filter + name search
+- [x] AlertCard organism (critical alert spotlight — dark card, crimson eyebrow + counter, status tag + ghost action)
 - [ ] Remaining atoms: Icon
-- [ ] Any organisms: NoteCard, AlertCard
+- [ ] Any organisms: NoteCard
 - [ ] Framer Motion page transitions (deliberately deferred)
 - [ ] Real PWA icons (placeholder paths in vite.config.ts)
 - [ ] Dark mode
@@ -414,3 +415,5 @@ npx tsc --noEmit # type-check only
 | 2026-06-19 | Built SearchBar + FilterTabs molecules, PatientCard organism (Figma 178-5983 / 181-6450 / 181-6899 / 112-2337); assembled Patients list page with live encounter-type filter + name/MRN search; added `encounterType`/`bed` to Patient type + mock roster |
 | 2026-06-19 | Built Avatar atom + MessageRow organism (Figma 181-6548 / 206-7984); assembled Chat page `/chat` (Figma 206-7488) reusing ScreenHeader/SearchBar/FilterTabs — white-card message list, data-driven channel counts, live filter + name search; added `ChatThread` type + `chatThreads` mock |
 | 2026-06-19 | Added live previews for all built components to `/design-system` (Badge, Avatar, FilterPill, FilterTabs, SearchBar, NavItem, BottomNavigation, ScreenHeader, PatientCard, MessageRow); made design-system documentation a strict rule — every component must register + add a `componentPreviews` entry |
+| 2026-06-19 | Built AlertCard organism (Figma 155-3302) — critical alert spotlight: charcoal-base card, crimson-30/25% border, crimson eyebrow + "1 / 3" counter, white title, warm-white body, crimson status tag + ghost action; live preview in DS |
+| 2026-06-19 | Built SummaryCard organism (Figma 181-7113 collapsed / 182-6514 expanded) — collapsible charcoal banner: count + title + chevron toggle, expands to a crimson-20/10% panel of label/value rows with hairline dividers; collapsed + expanded previews in DS |
