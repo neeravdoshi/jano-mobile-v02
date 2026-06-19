@@ -33,51 +33,44 @@ export function ChatPage() {
       <ScreenHeader variant="doctor" title={currentDoctor.name} subtitle={currentDoctor.hospital} />
 
       <div
-        className="flex flex-1 flex-col overflow-y-auto no-scrollbar"
-        style={{ padding: 'var(--space-12)', gap: 'var(--space-12)' }}
+        className="flex flex-col"
+        style={{ padding: 'var(--space-16)', gap: 'var(--space-16)' }}
       >
         <SearchBar
-          className="shrink-0"
           showFilter
           placeholder="Search by Name, MRN or Phone"
           value={query}
           onChange={setQuery}
         />
+        <FilterTabs options={tabs} active={filter} onChange={setFilter} />
+      </div>
 
-        <FilterTabs className="shrink-0" options={tabs} active={filter} onChange={setFilter} />
+      <div
+        className="flex flex-1 flex-col overflow-y-auto no-scrollbar"
+        style={{ gap: 'var(--space-8)', padding: '0 var(--space-16) var(--space-24)' }}
+      >
+        {visible.map(t => (
+          <MessageRow
+            key={t.id}
+            initials={t.initials}
+            avatarColour={t.avatarColour}
+            avatarUrl={t.avatarUrl}
+            name={t.name}
+            time={t.time}
+            preview={t.preview}
+            unreadCount={t.unreadCount}
+            onClick={() => {}}
+          />
+        ))}
 
-        {/* White card wrapping the inset message rows (Figma 206:7544) */}
-        <div
-          className="flex flex-col"
-          style={{
-            background: 'var(--neutral-card)',
-            borderRadius: 'var(--radius-12)',
-            padding: 'var(--space-12)',
-            gap: 'var(--space-8)',
-          }}
-        >
-          {visible.map(t => (
-            <MessageRow
-              key={t.id}
-              initials={t.initials}
-              avatarColour={t.avatarColour}
-              name={t.name}
-              time={t.time}
-              preview={t.preview}
-              unreadCount={t.unreadCount}
-              onClick={() => {}}
-            />
-          ))}
-
-          {visible.length === 0 && (
-            <p
-              className="type-body-text-m"
-              style={{ color: 'var(--color-text-muted)', padding: 'var(--space-24) 0', textAlign: 'center' }}
-            >
-              No conversations match your search.
-            </p>
-          )}
-        </div>
+        {visible.length === 0 && (
+          <p
+            className="type-body-text-m"
+            style={{ color: 'var(--color-text-muted)', padding: 'var(--space-24) 0', textAlign: 'center' }}
+          >
+            No conversations match your search.
+          </p>
+        )}
       </div>
     </div>
   )

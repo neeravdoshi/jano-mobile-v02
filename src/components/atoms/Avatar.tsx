@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
 export type AvatarColour = 'grey' | 'red' | 'green' | 'blue' | 'yellow'
@@ -7,6 +8,8 @@ export interface AvatarProps {
   colour?: AvatarColour
   /** Diameter in px. Initials scale relative to this. */
   size?: number
+  /** When provided, renders a circular photo; falls back to initials on load error. */
+  imageUrl?: string
   className?: string
 }
 
@@ -19,8 +22,27 @@ const colourStyles: Record<AvatarColour, { bg: string; text: string }> = {
   yellow: { bg: 'var(--badge-yellow-bg)', text: 'var(--badge-yellow-text)' },
 }
 
-export function Avatar({ initials, colour = 'grey', size = 40, className }: AvatarProps) {
+export function Avatar({ initials, colour = 'grey', size = 40, imageUrl, className }: AvatarProps) {
+  const [imgError, setImgError] = useState(false)
+  const showImage = imageUrl && !imgError
   const { bg, text } = colourStyles[colour]
+
+  if (showImage) {
+    return (
+      <img
+        src={imageUrl}
+        alt={initials}
+        onError={() => setImgError(true)}
+        className={cn('shrink-0 object-cover', className)}
+        style={{
+          width: size,
+          height: size,
+          borderRadius: 'var(--radius-full)',
+        }}
+      />
+    )
+  }
+
   return (
     <span
       className={cn('inline-flex items-center justify-center shrink-0', className)}

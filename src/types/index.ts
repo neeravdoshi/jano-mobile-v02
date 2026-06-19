@@ -106,6 +106,7 @@ export interface ChatThread {
   name: string
   initials: string
   avatarColour: ChatAvatarColour
+  avatarUrl?: string
   preview: string
   time: string
   unreadCount?: number

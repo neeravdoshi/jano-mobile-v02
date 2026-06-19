@@ -10,7 +10,7 @@ export const currentDoctor: Doctor = {
   licenseNumber: 'KA-MED-44821',
 }
 
-// Patient roster for the list page. Counts → All 8 · IPD 5 · OPD 2 · Referral 1.
+// Patient roster for the list page. Counts -> All 8 * IPD 5 * OPD 2 * Referral 1.
 export const patients: Patient[] = [
   mk('p-1', 'Arjun Patel',   'IPD'),
   mk('p-2', 'Priya Sharma',  'IPD'),
@@ -22,16 +22,17 @@ export const patients: Patient[] = [
   mk('p-8', 'Meera Reddy',   'IPD'),
 ]
 
-// Chat threads for the Chat page. Counts → All 8 · Patients 5 · Team 3.
+// Chat threads for the Chat page. Counts -> All 8 * Patients 5 * Team 3.
+// avatarUrl: randomuser.me portraits (swap IDs to taste -- falls back to initials on error).
 export const chatThreads: ChatThread[] = [
-  { id: 'c-1', name: 'Ritika Sharma',    initials: 'RS', avatarColour: 'red',   channel: 'patient', time: '09:10AM',   unreadCount: 2, preview: 'Starting the new physical therapy regimen this week.' },
-  { id: 'c-2', name: 'Sneha Iyer',       initials: 'SI', avatarColour: 'green', channel: 'patient', time: '08:20AM',   unreadCount: 1, preview: 'Thank you doctor, the swelling has gone down a lot.' },
-  { id: 'c-3', name: 'Dr. Vikram Singh', initials: 'VS', avatarColour: 'blue',  channel: 'team',    time: '06:14AM',   unreadCount: 4, preview: 'Reviewed the MRI — let’s discuss it at morning rounds.' },
-  { id: 'c-4', name: 'Arjun Mehta',      initials: 'AM', avatarColour: 'grey',  channel: 'patient', time: 'Yesterday', preview: 'Can we reschedule tomorrow’s follow-up to the afternoon?' },
-  { id: 'c-5', name: 'Priya Nair',       initials: 'PN', avatarColour: 'red',   channel: 'patient', time: 'Yesterday', preview: 'Feeling much better after the new dosage.' },
-  { id: 'c-6', name: 'Dr. Kavya Rao',    initials: 'KR', avatarColour: 'green', channel: 'team',    time: 'Mon',       preview: 'Discharge summary for bed 12 is ready for sign-off.' },
-  { id: 'c-7', name: 'Rohan Gupta',      initials: 'RG', avatarColour: 'yellow',channel: 'patient', time: 'Mon',       preview: 'Is this medication safe to take with my allergy?' },
-  { id: 'c-8', name: 'Dr. Aditya Verma', initials: 'AV', avatarColour: 'blue',  channel: 'team',    time: 'Sun',       unreadCount: 3, preview: 'Lab flagged a critical potassium value — please check.' },
+  { id: 'c-1', name: 'Ritika Sharma',    initials: 'RS', avatarColour: 'red',    avatarUrl: 'https://randomuser.me/api/portraits/women/65.jpg', channel: 'patient', time: '09:10AM',   unreadCount: 2, preview: 'Starting the new physical therapy regimen this week.' },
+  { id: 'c-2', name: 'Sneha Iyer',       initials: 'SI', avatarColour: 'green',  avatarUrl: 'https://randomuser.me/api/portraits/women/44.jpg', channel: 'patient', time: '08:20AM',   unreadCount: 1, preview: 'Thank you doctor, the swelling has gone down a lot.' },
+  { id: 'c-3', name: 'Dr. Vikram Singh', initials: 'VS', avatarColour: 'blue',   avatarUrl: 'https://randomuser.me/api/portraits/men/32.jpg',   channel: 'team',    time: '06:14AM',   unreadCount: 4, preview: "Reviewed the MRI -- let's discuss it at morning rounds." },
+  { id: 'c-4', name: 'Arjun Mehta',      initials: 'AM', avatarColour: 'grey',   avatarUrl: 'https://randomuser.me/api/portraits/men/75.jpg',   channel: 'patient', time: 'Yesterday',                 preview: "Can we reschedule tomorrow's follow-up to the afternoon?" },
+  { id: 'c-5', name: 'Priya Nair',       initials: 'PN', avatarColour: 'red',    avatarUrl: 'https://randomuser.me/api/portraits/women/79.jpg', channel: 'patient', time: 'Yesterday',                 preview: 'Feeling much better after the new dosage.' },
+  { id: 'c-6', name: 'Dr. Kavya Rao',    initials: 'KR', avatarColour: 'green',                                                                  channel: 'team',    time: 'Mon',                       preview: 'Discharge summary for bed 12 is ready for sign-off.' },
+  { id: 'c-7', name: 'Rohan Gupta',      initials: 'RG', avatarColour: 'yellow',                                                                 channel: 'patient', time: 'Mon',                       preview: 'Is this medication safe to take with my allergy?' },
+  { id: 'c-8', name: 'Dr. Aditya Verma', initials: 'AV', avatarColour: 'blue',   avatarUrl: 'https://randomuser.me/api/portraits/men/64.jpg',   channel: 'team',    time: 'Sun',       unreadCount: 3, preview: 'Lab flagged a critical potassium value -- please check.' },
 ]
 
 function mk(id: string, name: string, encounterType: Patient['encounterType']): Patient {

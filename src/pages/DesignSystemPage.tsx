@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import markSrc from '@/assets/jano-mark.svg'
 import { colorGroups, componentRegistry } from '@/lib/componentRegistry'
 import type { ComponentDoc } from '@/lib/componentRegistry'
 import { House, MessageSquare } from 'lucide-react'
@@ -250,7 +251,7 @@ const componentPreviews: Record<string, React.ReactNode> = {
   ),
 
   AlertCard: (
-    <div style={{ maxWidth: 420 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 420 }}>
       <AlertCard
         eyebrow="Urgent lab alert"
         title="High potassium: 5.3 mEq/L"
@@ -260,6 +261,15 @@ const componentPreviews: Record<string, React.ReactNode> = {
         index={1}
         total={3}
       />
+      <p style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--charcoal-oslo)' }}>
+        <strong style={{ color: 'var(--charcoal-base)', fontWeight: 600 }}>One card, no variants.</strong>{' '}
+        The Figma frame shows three stacked layers in descending shades
+        (<code>--charcoal-base</code> → <code>--charcoal-warm</code> → <code>--charcoal-50</code>),
+        each slightly smaller — that is a purely decorative depth cue for a pile of alerts, not three
+        component states. This card always uses the front layer (<code>--charcoal-base</code>); the{' '}
+        <code>index</code>/<code>total</code> props drive the “1 / 3” counter. A literal stacked deck
+        is a page-level wrapper, not a card variant.
+      </p>
     </div>
   ),
 
@@ -326,14 +336,7 @@ export function DesignSystemPage() {
         background: '#fff', flexShrink: 0, position: 'sticky', top: 0, zIndex: 100,
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{
-            width: 30, height: 30, borderRadius: 8, background: 'var(--neutral-sunken)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: 800, fontSize: 14, color: 'var(--charcoal-base)', letterSpacing: -0.5,
-            flexShrink: 0,
-          }}>
-            j<sup style={{ fontSize: 8, color: 'var(--crimson-base)', verticalAlign: 'super' }}>+</sup>
-          </div>
+          <img src={markSrc} alt="Jano" style={{ height: 28, width: 'auto', flexShrink: 0 }} />
           <div>
             <span style={{ fontWeight: 700, fontSize: 15, color: 'var(--charcoal-base)', letterSpacing: -0.3 }}>
               Jano
@@ -729,7 +732,7 @@ function NavLink({ label, active, onClick, indent = false }: {
       style={{
         display: 'block', width: '100%', textAlign: 'left',
         padding: indent ? '5px 20px 5px 28px' : '6px 20px',
-        fontSize: 13, fontWeight: active ? 600 : 400,
+        fontSize: 'var(--text-size-s)', fontWeight: active ? 600 : 400,
         color: active ? 'var(--crimson-base)' : 'var(--charcoal-base)',
         background: active ? 'var(--crimson-5)' : 'transparent',
         borderLeft: active ? '2px solid var(--crimson-base)' : '2px solid transparent',

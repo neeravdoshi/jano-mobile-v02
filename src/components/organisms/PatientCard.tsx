@@ -43,14 +43,14 @@ export function PatientCard({
       className={cn('flex w-full items-center text-left transition-colors duration-150', className)}
       style={{
         gap: 'var(--space-12)',
-        padding: 'var(--space-16)',
+        padding: 'var(--space-20) var(--space-16)',
         borderRadius: 'var(--radius-12)',
         background: highlighted ? 'var(--charcoal-50)' : 'var(--neutral-card)',
         border: `1px solid ${highlighted ? 'rgba(255,255,255,0.1)' : 'var(--neutral-stroke)'}`,
         cursor: 'pointer',
       }}
     >
-      <div className="flex min-w-0 flex-1 flex-col" style={{ gap: 'var(--space-4)' }}>
+      <div className="flex min-w-0 flex-1 flex-col" style={{ gap: 'var(--space-8)' }}>
         <div className="flex items-center justify-between" style={{ gap: 'var(--space-8)' }}>
           <span
             className="type-title-m truncate"
