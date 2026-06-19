@@ -337,7 +337,7 @@ const componentPreviews: Record<string, React.ReactNode> = {
 
   MessageComposer: (
     <div style={{ maxWidth: 420 }}>
-      <MessageComposer placeholder="Reply as Dr. Mehta" />
+      <MessageComposer placeholder="Reply as Dr. Girish Sharma" />
     </div>
   ),
 

@@ -1,14 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ChatThreadHeader, MessageComposer } from '@/components/organisms'
 import { ChatBubble, DayDivider, ThreadNote } from '@/components/molecules'
-import { getConversation } from '@/lib/mockData'
+import { currentDoctor, getConversation } from '@/lib/mockData'
 
 export function ChatThreadPage() {
   const { id = 'c-1' } = useParams()
   const navigate = useNavigate()
   const conversation = getConversation(id)
   const [draft, setDraft] = useState('')
+
+  // Open at the most recent message, like a real chat — jump to the bottom on load.
+  const transcriptRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = transcriptRef.current
+    if (el) el.scrollTop = el.scrollHeight
+  }, [id])
 
   return (
     <div className="relative flex h-full flex-col" style={{ background: 'var(--neutral-app-bg)' }}>
@@ -21,6 +28,7 @@ export function ChatThreadPage() {
 
       {/* Scrolling transcript — extra bottom padding so the last message clears the floating composer */}
       <div
+        ref={transcriptRef}
         className="flex flex-1 flex-col overflow-y-auto no-scrollbar"
         style={{ gap: 'var(--space-16)', padding: 'var(--space-20) var(--space-16) var(--space-96)' }}
       >
@@ -47,7 +55,7 @@ export function ChatThreadPage() {
         style={{ padding: '0 var(--space-16) var(--space-16)' }}
       >
         <MessageComposer
-          placeholder="Reply as Dr. Mehta"
+          placeholder={`Reply as ${currentDoctor.name}`}
           value={draft}
           onChange={setDraft}
           onSend={() => setDraft('')}
