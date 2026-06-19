@@ -9,3 +9,6 @@ export type { BadgeProps, BadgeColour } from './Badge'
 
 export { Avatar } from './Avatar'
 export type { AvatarProps, AvatarColour } from './Avatar'
+
+export { StatCard } from './StatCard'
+export type { StatCardProps } from './StatCard'

@@ -28,3 +28,6 @@ export type { DayDividerProps } from './DayDivider'
 export { ThreadNote } from './ThreadNote'
 export type { ThreadNoteProps } from './ThreadNote'
 
+export { StatCardGroup } from './StatCardGroup'
+export type { StatCardGroupProps, StatItem } from './StatCardGroup'
+

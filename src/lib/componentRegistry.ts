@@ -28,6 +28,7 @@ export const componentRegistry: RegistrySection[] = [
       { name: 'Button', description: 'Primary, outline, ghost and destructive actions', atomicLevel: 'atom', status: 'built', path: 'components/atoms/Button.tsx', variants: [{ name: 'primary' }, { name: 'outline' }, { name: 'ghost' }, { name: 'destructive' }] },
       { name: 'Input', description: 'Bare text input with error state', atomicLevel: 'atom', status: 'built', path: 'components/atoms/Input.tsx', variants: [{ name: 'default' }, { name: 'error' }] },
       { name: 'Avatar', description: 'Circular initials avatar: colour variants share the Badge tokens', atomicLevel: 'atom', status: 'built', path: 'components/atoms/Avatar.tsx', variants: [{ name: 'grey' }, { name: 'red' }, { name: 'green' }, { name: 'blue' }, { name: 'yellow' }] },
+      { name: 'StatCard', description: 'Home-screen metric tile: big value over a Lucide icon + uppercase caption', atomicLevel: 'atom', status: 'built', path: 'components/atoms/StatCard.tsx' },
     ],
   },
   {
@@ -44,6 +45,7 @@ export const componentRegistry: RegistrySection[] = [
       { name: 'MessageBubble', description: 'WhatsApp-style bubble (chat V2): tail, inline time + read ticks, colored group sender; mine + theirs', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/MessageBubble.tsx', variants: [{ name: 'theirs' }, { name: 'mine' }] },
       { name: 'DayDivider', description: 'Centered uppercase day pill (Yesterday / Today) for a transcript', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/DayDivider.tsx' },
       { name: 'ThreadNote', description: 'Centered muted system note inside a conversation', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/ThreadNote.tsx' },
+      { name: 'StatCardGroup', description: 'Equal-width row of StatCards (Referrals / OPD / Inpatient)', atomicLevel: 'molecule', status: 'built', path: 'components/molecules/StatCardGroup.tsx' },
     ],
   },
   {
@@ -59,6 +61,7 @@ export const componentRegistry: RegistrySection[] = [
       { name: 'MessageComposer', description: 'Floating chat composer (V1): attach + text input + voice + crimson send', atomicLevel: 'organism', status: 'built', path: 'components/organisms/MessageComposer.tsx' },
       { name: 'ChatComposer', description: 'Docked WhatsApp-style composer (V2): attach + input + camera, mic↔send toggle on input', atomicLevel: 'organism', status: 'built', path: 'components/organisms/ChatComposer.tsx' },
       { name: 'ChatThreadHeader', description: 'Open-chat header: back, patient name + MRN, expand action, care-thread participants', atomicLevel: 'organism', status: 'built', path: 'components/organisms/ChatThreadHeader.tsx' },
+      { name: 'UnreadPatientChatsCard', description: 'Home "Needs Attention" card: crimson eyebrow + View All, inset unread-chat rows', atomicLevel: 'organism', status: 'built', path: 'components/organisms/UnreadPatientChatsCard.tsx' },
     ],
   },
 ]

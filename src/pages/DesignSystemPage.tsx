@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom'
 import markSrc from '@/assets/jano-mark.svg'
 import { colorGroups, componentRegistry } from '@/lib/componentRegistry'
 import type { ComponentDoc } from '@/lib/componentRegistry'
-import { House, MessageSquare, SquarePen } from 'lucide-react'
+import { House, MessageSquare, SquarePen, Share2, Stethoscope, BedDouble } from 'lucide-react'
 import { Button } from '@/components/atoms/Button'
 import { Input } from '@/components/atoms/Input'
 import { Badge } from '@/components/atoms/Badge'
 import { Avatar } from '@/components/atoms/Avatar'
+import { StatCard } from '@/components/atoms/StatCard'
+import { StatCardGroup } from '@/components/molecules/StatCardGroup'
+import { UnreadPatientChatsCard } from '@/components/organisms/UnreadPatientChatsCard'
 import { FormField } from '@/components/molecules/FormField'
 import { DividerWithLabel } from '@/components/molecules/DividerWithLabel'
 import { SocialAuthButton } from '@/components/molecules/SocialAuthButton'
@@ -205,6 +208,26 @@ const componentPreviews: Record<string, React.ReactNode> = {
     </div>
   ),
 
+  StatCard: (
+    <div style={{ display: 'flex', gap: 8, maxWidth: 360 }}>
+      <StatCard value={6} label="Referrals" icon={Share2} className="flex-1" />
+      <StatCard value={23} label="OPD" icon={Stethoscope} className="flex-1" />
+      <StatCard value={9} label="Inpatient" icon={BedDouble} className="flex-1" />
+    </div>
+  ),
+
+  StatCardGroup: (
+    <div style={{ maxWidth: 360 }}>
+      <StatCardGroup
+        items={[
+          { value: 6, label: 'Referrals', icon: Share2 },
+          { value: 23, label: 'OPD', icon: Stethoscope },
+          { value: 9, label: 'Inpatient', icon: BedDouble },
+        ]}
+      />
+    </div>
+  ),
+
   FilterPill: (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
       <FilterPill label="All" selected />
@@ -270,6 +293,18 @@ const componentPreviews: Record<string, React.ReactNode> = {
           <MessageRow variant="flat" showDivider initials="AM" avatarColour="grey" name="Arjun Mehta" time="Yesterday" preview="Can we reschedule tomorrow’s follow-up to the afternoon?" />
         </div>
       </div>
+    </div>
+  ),
+
+  UnreadPatientChatsCard: (
+    <div style={{ maxWidth: 420 }}>
+      <UnreadPatientChatsCard
+        items={[
+          { id: 'c-1', initials: 'RS', avatarColour: 'red', name: 'Ritika Sharma', time: '09:10AM', preview: 'Starting the new physical therapy regimen this week.', unreadCount: 2 },
+          { id: 'c-2', initials: 'SI', avatarColour: 'green', name: 'Sneha Iyer', time: '08:20AM', preview: 'Thank you doctor, the swelling has gone down a lot.', unreadCount: 1 },
+          { id: 'c-3', initials: 'VS', avatarColour: 'blue', name: 'Dr. Vikram Singh', time: '06:14AM', preview: 'Reviewed the MRI — let’s discuss at morning rounds.', unreadCount: 4 },
+        ]}
+      />
     </div>
   ),
 

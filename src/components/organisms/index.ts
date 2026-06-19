@@ -24,3 +24,6 @@ export type { ChatComposerProps } from './ChatComposer'
 
 export { ChatThreadHeader } from './ChatThreadHeader'
 export type { ChatThreadHeaderProps } from './ChatThreadHeader'
+
+export { UnreadPatientChatsCard } from './UnreadPatientChatsCard'
+export type { UnreadPatientChatsCardProps, UnreadChatItem } from './UnreadPatientChatsCard'

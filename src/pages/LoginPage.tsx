@@ -32,8 +32,8 @@ export function LoginPage() {
   const [email, setEmail] = useState('')
   const navigate = useNavigate()
 
-  // Prototype: simulate auth — sign in jumps straight to the patient list.
-  const signIn = () => navigate('/patients')
+  // Prototype: simulate auth — sign in jumps straight to the doctor home screen.
+  const signIn = () => navigate('/dashboard')
 
   return (
     <div

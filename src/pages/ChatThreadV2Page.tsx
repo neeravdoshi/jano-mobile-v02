@@ -84,7 +84,7 @@ export function ChatThreadV2Page() {
           backgroundColor: 'var(--neutral-app-bg)',
           backgroundImage: `url("${chatMotif}")`,
           backgroundRepeat: 'repeat',
-          backgroundSize: '260px 260px',
+          backgroundSize: '150px 150px',
         }}
       >
         {items.map((item, i) => {

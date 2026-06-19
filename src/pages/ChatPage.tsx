@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { SquarePen } from 'lucide-react'
 import { ScreenHeader, MessageRow } from '@/components/organisms'
 import { SearchBar, FilterTabs, type FilterTabOption } from '@/components/molecules'
-import { currentDoctor, chatThreads } from '@/lib/mockData'
+import { chatThreads } from '@/lib/mockData'
 import type { ChatChannel } from '@/types'
 
 type Filter = 'all' | ChatChannel
@@ -32,11 +33,11 @@ export function ChatPage() {
 
   return (
     <div className="flex h-full flex-col" style={{ background: 'var(--neutral-app-bg)' }}>
-      <ScreenHeader variant="doctor" title={currentDoctor.name} subtitle={currentDoctor.hospital} />
+      <ScreenHeader variant="title" title="Messages" actionIcon={SquarePen} actionLabel="New message" />
 
       <div
         className="flex flex-col"
-        style={{ padding: 'var(--space-16)', gap: 'var(--space-16)' }}
+        style={{ padding: '0 var(--space-16) var(--space-16)', gap: 'var(--space-16)' }}
       >
         <SearchBar
           showFilter

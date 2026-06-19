@@ -1,7 +1,7 @@
-import { ChevronLeft, Building2, MoreHorizontal } from 'lucide-react'
+import { ChevronLeft, Building2, MoreHorizontal, type LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-export type ScreenHeaderVariant = 'default' | 'no-arrow' | 'doctor' | 'chat'
+export type ScreenHeaderVariant = 'default' | 'no-arrow' | 'doctor' | 'chat' | 'title'
 
 export interface ScreenHeaderProps {
   variant?: ScreenHeaderVariant
@@ -9,6 +9,10 @@ export interface ScreenHeaderProps {
   subtitle?: string
   onBack?: () => void
   onMore?: () => void
+  /** Trailing circular action (e.g. compose) — primarily for the 'title' variant. */
+  actionIcon?: LucideIcon
+  actionLabel?: string
+  onAction?: () => void
   className?: string
 }
 
@@ -18,11 +22,50 @@ export function ScreenHeader({
   subtitle,
   onBack,
   onMore,
+  actionIcon: ActionIcon,
+  actionLabel,
+  onAction,
   className,
 }: ScreenHeaderProps) {
   const hasBack = variant === 'default' || variant === 'chat'
   const hasMore = variant === 'chat'
   const isDoctor = variant === 'doctor'
+
+  // ── 'title' variant — large display title on the warm surface (no white bar) ──
+  if (variant === 'title') {
+    return (
+      <div className={cn('flex w-full flex-col', className)}>
+        <div className="header-safe-top" />
+        <div
+          className="flex w-full items-center justify-between"
+          style={{ padding: '0 var(--space-16) var(--space-16)' }}
+        >
+          <h1 className="type-display-m" style={{ color: 'var(--color-text-primary)' }}>
+            {title}
+          </h1>
+          {ActionIcon && (
+            <button
+              type="button"
+              onClick={onAction}
+              aria-label={actionLabel}
+              className="grid shrink-0 place-items-center transition-colors duration-150"
+              style={{
+                height: 'var(--space-40)',
+                width: 'var(--space-40)',
+                borderRadius: 'var(--radius-full)',
+                background: 'var(--crimson-5)',
+                border: '1px solid var(--crimson-20)',
+                color: 'var(--crimson-base)',
+                cursor: 'pointer',
+              }}
+            >
+              <ActionIcon size={20} strokeWidth={1.5} />
+            </button>
+          )}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div

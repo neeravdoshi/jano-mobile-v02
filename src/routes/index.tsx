@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { AppLayout } from '@/components/templates/AppLayout'
 import { DesignSystemPage } from '@/pages/DesignSystemPage'
-import { DashboardPage } from '@/pages/DashboardPage'
+import { HomePage } from '@/pages/HomePage'
 import { PatientsPage } from '@/pages/PatientsPage'
 import { PatientsV2Page } from '@/pages/PatientsV2Page'
 import { SchedulePage } from '@/pages/SchedulePage'
@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { index: true, element: <LoginPage /> },
-      { path: 'dashboard', element: <DashboardPage /> },
+      { path: 'dashboard', element: <HomePage /> },
       // Version 1 (default) = distilled list (PatientsV2Page); Version 2 = classic boxed cards (PatientsPage).
       // The toggle pill in AppLayout swaps between /patients and /patients-v2.
       { path: 'patients', element: <PatientsV2Page /> },
